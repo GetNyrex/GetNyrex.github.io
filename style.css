@@ -49,3 +49,38 @@ button {
   padding: 20px;
   border-radius: 8px;
 }
+
+/* Fade-in effect */
+body {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+body.loaded {
+  opacity: 1;
+}
+
+/* Ripple effect on buttons */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button .ripple {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-effect 0.6s linear;
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
