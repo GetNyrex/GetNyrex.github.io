@@ -3,6 +3,12 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #0f0f10;
   color: white;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+body.loaded {
+  opacity: 1;
 }
 
 header {
@@ -50,15 +56,6 @@ button {
   border-radius: 8px;
 }
 
-/* Fade-in effect */
-body {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-body.loaded {
-  opacity: 1;
-}
-
 .under-construction {
   position: fixed;
   top: 50%;
@@ -71,8 +68,6 @@ body.loaded {
   padding: 20px 30px;
   border-radius: 10px;
   z-index: 9999;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
-
-
