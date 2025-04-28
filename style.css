@@ -1,6 +1,43 @@
-/* Button Base */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.title {
+    color: #0ff; /* Neon Blue */
+    font-size: 5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 0.2em;
+    text-shadow: 0 2px 20px #0ff, 0 0 2px #000;
+}
+
+.subtitle {
+    color: #e0e0e0;
+    font-size: 1.5rem;
+    margin-bottom: 2em;
+    font-weight: 400;
+    text-shadow: 0 1px 8px #000;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
 .btn {
-    background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%);
+    background: linear-gradient(90deg, #004080 0%, #00ffff 100%); /* Dark Blue to Neon Blue */
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -8,62 +45,33 @@
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    /* Edge shadows only (no glow) */
-    box-shadow: 
-        4px 0 8px -4px rgba(31, 81, 255, 0.7),   /* Right edge */
-        -4px 0 8px -4px rgba(31, 81, 255, 0.7),  /* Left edge */
-        0 4px 8px -4px rgba(31, 81, 255, 0.7),   /* Bottom edge */
-        0 -4px 8px -4px rgba(31, 81, 255, 0.5);  /* Top edge */
-    transition: all 0.2s ease;
-    position: relative;
+    box-shadow: 0 4px 24px rgba(0, 255, 255, 0.2); /* Neon Blue shadow */
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    outline: none;
 }
 
-/* Remove glow animations */
-@keyframes glow-pulse {
-    /* Empty - animations removed */
+.btn .fa-download {
+    font-size: 1.1em;
 }
 
-/* Hover State */
+.btn .arrow {
+    font-size: 1.1em;
+    margin-left: 0.5em;
+}
+
 .btn:hover, .btn:focus {
-    box-shadow: 
-        6px 0 12px -4px rgba(31, 81, 255, 0.9),
-        -6px 0 12px -4px rgba(31, 81, 255, 0.9),
-        0 6px 12px -4px rgba(31, 81, 255, 0.9),
-        0 -6px 12px -4px rgba(31, 81, 255, 0.7);
+    background: linear-gradient(90deg, #00ffff 0%, #004080 100%); /* Reversed gradient on hover */
     transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(0, 255, 255, 0.4); /* Enhanced neon blue shadow */
 }
 
-/* Secondary Button */
 .btn-secondary {
-    background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%);
-    box-shadow: 
-        4px 0 8px -4px rgba(31, 81, 255, 0.5),
-        -4px 0 8px -4px rgba(31, 81, 255, 0.5),
-        0 4px 8px -4px rgba(31, 81, 255, 0.5),
-        0 -4px 8px -4px rgba(31, 81, 255, 0.3);
+    background: linear-gradient(90deg, #006699 0%, #00ffff 100%); /* Slightly lighter neon blue */
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    box-shadow: 
-        6px 0 12px -4px rgba(31, 81, 255, 0.7),
-        -6px 0 12px -4px rgba(31, 81, 255, 0.7),
-        0 6px 12px -4px rgba(31, 81, 255, 0.7),
-        0 -6px 12px -4px rgba(31, 81, 255, 0.5);
-}
-
-/* Add this to your existing CSS */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    z-index: -1;
-    box-shadow: 
-        0 -20px 40px -10px rgba(31, 81, 255, 0.15) inset,  /* Bottom */
-        0 20px 40px -10px rgba(31, 81, 255, 0.15) inset,   /* Top */
-        20px 0 40px -10px rgba(31, 81, 255, 0.15) inset,   /* Left */
-        -20px 0 40px -10px rgba(31, 81, 255, 0.15) inset;  /* Right */
+    background: linear-gradient(90deg, #00ffff 0%, #006699 100%); /* Reversed gradient on hover */
 }
