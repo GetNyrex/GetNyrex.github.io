@@ -89,6 +89,15 @@ body {
     }
 }
 
+@keyframes floatElement {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
 /* Feature Sections */
 .feature-section {
     background: radial-gradient(ellipse at top, #09092d 0%, #000 80%); /* Same as body */
@@ -119,6 +128,7 @@ body {
 .feature-text {
     flex: 1 1 400px;
     text-align: left;
+    animation: floatElement 5s ease-in-out infinite; /* Apply floating animation */
 }
 
 .feature-text h2 {
@@ -135,6 +145,7 @@ body {
 .feature-image {
     flex: 1 1 400px;
     text-align: center;
+    animation: floatElement 6s ease-in-out infinite; /* Apply floating animation */
 }
 
 .feature-image img {
