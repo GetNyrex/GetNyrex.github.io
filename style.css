@@ -105,15 +105,15 @@ body {
     padding: 60px 20px;
     width: 100%;
     box-sizing: border-box;
-    opacity: 0; /* Start completely transparent */
-    transform: translateY(50px); /* Start hidden */
-    transition: opacity 0.8s ease, transform 0.8s ease;
+   /* opacity: 0;  Start completely transparent */
+    /*transform: translateY(50px);  Start hidden */
+    /*transition: opacity 0.8s ease, transform 0.8s ease;*/
 }
 
-.feature-section.active {
-    opacity: 1; /* Fade in */
+/*.feature-section.active {
+    opacity: 1;  Fade in
     transform: translateY(0);
-}
+}*/
 
 .feature-content {
     max-width: 1200px;
