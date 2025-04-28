@@ -23,6 +23,26 @@ body::before {
     z-index: 9999;
 }
 
+.warning-banner {
+  position: fixed;       /* Fix it at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #1F51FF, #0050ff); /* neon blue gradient */
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  padding: 8px 0;
+  z-index: 10000;        /* Make sure it’s on top */
+  box-shadow: 0 2px 10px rgba(31,81,255,0.7);
+  letter-spacing: 1px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  user-select: none;     /* Prevent text selection */
+  text-transform: uppercase;
+}
+
+
 .container {
     text-align: center;
     padding: 50px 20px;
