@@ -104,6 +104,7 @@ body {
     padding: 60px 20px;
     width: 100%;
     box-sizing: border-box;
+    /* Shadow removed from sections */
 }
 
 .feature-content {
@@ -143,7 +144,7 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Image shadow kept */
 }
 
 /* Feature Grid */
@@ -160,7 +161,7 @@ body {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Grid item shadow kept */
 }
 
 .feature-item i {
