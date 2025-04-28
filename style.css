@@ -2,11 +2,11 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: radial-gradient(ellipse at center, #1a0000 0%, #000 100%);
+    background: radial-gradient(ellipse at top, #2d0909 0%, #000 80%);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
 }
 
 .container {
@@ -15,46 +15,63 @@ body {
 
 .title {
     color: #ff4444;
-    font-size: 4rem;
-    font-weight: bold;
+    font-size: 5rem;
+    font-weight: 800;
     letter-spacing: 2px;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.2em;
+    text-shadow: 0 2px 20px #ff4444, 0 0 2px #000;
 }
 
 .subtitle {
-    color: #ccc;
+    color: #e0e0e0;
     font-size: 1.5rem;
     margin-bottom: 2em;
+    font-weight: 400;
+    text-shadow: 0 1px 8px #000;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 1em;
+    gap: 2em;
 }
 
 .btn {
-    background: #b71c1c;
+    background: linear-gradient(90deg, #b71c1c 0%, #ff4444 100%);
     color: #fff;
-    padding: 1em 2em;
+    padding: 1em 2.5em;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: background 0.2s, transform 0.2s;
-    box-shadow: 0 4px 16px rgba(255, 68, 68, 0.2);
+    font-size: 1.2rem;
+    font-weight: 700;
+    box-shadow: 0 4px 24px rgba(255, 68, 68, 0.2);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    outline: none;
 }
 
-.btn:hover {
-    background: #ff4444;
-    transform: translateY(-2px) scale(1.05);
+.btn .fa-download {
+    font-size: 1.1em;
+}
+
+.btn .arrow {
+    font-size: 1.1em;
+    margin-left: 0.5em;
+}
+
+.btn:hover, .btn:focus {
+    background: linear-gradient(90deg, #ff4444 0%, #b71c1c 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(255, 68, 68, 0.4);
 }
 
 .btn-secondary {
-    background: #d32f2f;
+    background: linear-gradient(90deg, #d32f2f 0%, #ff4444 100%);
 }
 
-.btn-secondary:hover {
-    background: #ff4444;
+.btn-secondary:hover, .btn-secondary:focus {
+    background: linear-gradient(90deg, #ff4444 0%, #d32f2f 100%);
 }
