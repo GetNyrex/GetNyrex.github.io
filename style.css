@@ -130,6 +130,23 @@ body::before {
     }
 }
 
+.site-footer {
+  width: 100%;
+  background: #000;
+  color: #1F51FF; /* Neon blue text */
+  text-align: center;
+  padding: 25px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-top: 1px solid rgba(31, 81, 255, 0.2); /* Subtle neon line */
+  margin-top: 50px; /* Space above footer */
+}
+
+.site-footer p {
+  margin: 5px 0;
+}
+
 @keyframes floatElement {
     0%, 100% {
         transform: translateY(0px);
