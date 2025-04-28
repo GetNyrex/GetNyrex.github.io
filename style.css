@@ -7,7 +7,6 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Montserrat', Arial, sans-serif;
-    overflow: hidden; /* Hide the circular glow overflow */
 }
 
 .container {
@@ -15,28 +14,13 @@ body {
 }
 
 .title {
-    color: #0ff; /* Neon Blue */
+    color: #1F51FF; /* Dark Neon Blue */
     font-size: 5rem;
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 0.2em;
-    text-shadow: 0 2px 20px #0ff, 0 0 2px #000;
-    position: relative; /* For the glow effect */
+    text-shadow: 0 2px 20px #1F51FF, 0 0 2px #000;
     animation: floatText 5s ease-in-out infinite; /* Floating animation */
-}
-
-.title::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    background: rgba(0, 255, 255, 0.1);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotateGlow 10s linear infinite;
-    z-index: -1; /* Behind the text */
 }
 
 .subtitle {
@@ -55,7 +39,7 @@ body {
 }
 
 .btn {
-    background: linear-gradient(90deg, #004080 0%, #00ffff 100%); /* Dark Blue to Neon Blue */
+    background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%); /* Dark Blue to Dark Neon Blue */
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -63,7 +47,7 @@ body {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    box-shadow: 0 4px 24px rgba(0, 255, 255, 0.2); /* Neon Blue shadow */
+    box-shadow: 0 4px 24px rgba(31, 81, 255, 0.2); /* Dark Neon Blue shadow */
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
@@ -81,29 +65,20 @@ body {
 }
 
 .btn:hover, .btn:focus {
-    background: linear-gradient(90deg, #00ffff 0%, #004080 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #1F51FF 0%, #00008B 100%); /* Reversed gradient on hover */
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 32px rgba(0, 255, 255, 0.4); /* Enhanced neon blue shadow */
+    box-shadow: 0 8px 32px rgba(31, 81, 255, 0.4); /* Enhanced Dark Neon Blue shadow */
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #006699 0%, #00ffff 100%); /* Slightly lighter neon blue */
+    background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%); /* Darker Blue to Dark Neon Blue */
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: linear-gradient(90deg, #00ffff 0%, #006699 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #1F51FF 0%, #001F3F 100%); /* Reversed gradient on hover */
 }
 
 /* Animations */
-@keyframes rotateGlow {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
 @keyframes floatText {
     0%, 100% {
         transform: translateY(0px);
