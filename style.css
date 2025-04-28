@@ -2,11 +2,25 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
+    background: #000000; /* solid black background */
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Montserrat', Arial, sans-serif;
+    position: relative; /* needed for the pseudo-element */
+}
+
+/* Neon blue gradient at the top of the page */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px; /* adjust height as needed */
+    background: linear-gradient(180deg, #1F51FF, transparent);
+    pointer-events: none; /* allows clicks through */
+    z-index: 9999;
 }
 
 .container {
@@ -20,7 +34,8 @@ body {
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 0.2em;
-    text-shadow: 0 2px 20px #1F51FF, 0 0 2px #000;
+    /* Remove text shadow */
+    text-shadow: none;
     animation: floatText 5s ease-in-out infinite;
 }
 
@@ -29,7 +44,8 @@ body {
     font-size: 1.5rem;
     margin-bottom: 2em;
     font-weight: 400;
-    text-shadow: 0 1px 8px #000;
+    /* Remove text shadow */
+    text-shadow: none;
     animation: floatText 4s ease-in-out infinite;
 }
 
@@ -40,7 +56,7 @@ body {
 }
 
 .btn {
-    background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%);
+    background: #00008B; /* solid dark blue */
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -48,8 +64,9 @@ body {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    box-shadow: 0 4px 24px rgba(31, 81, 255, 0.2);
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    /* Remove box-shadow */
+    box-shadow: none;
+    transition: background 0.2s, transform 0.2s;
     display: flex;
     align-items: center;
     gap: 0.7em;
@@ -66,19 +83,23 @@ body {
 }
 
 .btn:hover, .btn:focus {
-    background: linear-gradient(90deg, #1F51FF 0%, #00008B 100%);
+    background: #1F51FF; /* solid bright blue on hover */
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 32px rgba(31, 81, 255, 0.4);
+    /* Remove box-shadow */
+    box-shadow: none;
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%);
+    background: #001F3F; /* solid navy blue */
+    /* Remove box-shadow */
+    box-shadow: none;
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: linear-gradient(90deg, #1F51FF 0%, #001F3F 100%);
+    background: #1F51FF; /* solid bright blue on hover */
+    /* Remove box-shadow */
+    box-shadow: none;
 }
-
 
 @keyframes floatText {
     0%, 100% {
@@ -98,9 +119,8 @@ body {
     }
 }
 
-
 .feature-section {
-    background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
+    background: #000000; /* solid black */
     color: #fff;
     padding: 60px 20px;
     width: 100%;
@@ -108,6 +128,8 @@ body {
     opacity: 0; 
     transform: translateY(50px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    /* Remove box-shadow */
+    box-shadow: none;
 }
 
 .feature-section.active {
@@ -152,9 +174,9 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Remove box-shadow */
+    box-shadow: none;
 }
-
 
 .feature-grid {
     max-width: 1200px;
@@ -169,7 +191,8 @@ body {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Remove box-shadow */
+    box-shadow: none;
 }
 
 .feature-item i {
