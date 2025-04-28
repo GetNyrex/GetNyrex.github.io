@@ -55,7 +55,7 @@ body {
 }
 
 .btn {
-    background: linear-gradient(90deg, #004080 0%, #00ffff 100%); /* Dark Blue to Neon Blue */
+    background: linear-gradient(90deg, #00008B 0%, #00FFFF 100%); /* Dark Blue to Neon Blue */
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -81,17 +81,17 @@ body {
 }
 
 .btn:hover, .btn:focus {
-    background: linear-gradient(90deg, #00ffff 0%, #004080 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #00FFFF 0%, #00008B 100%); /* Reversed gradient on hover */
     transform: translateY(-2px) scale(1.04);
     box-shadow: 0 8px 32px rgba(0, 255, 255, 0.4); /* Enhanced neon blue shadow */
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #006699 0%, #00ffff 100%); /* Slightly lighter neon blue */
+    background: linear-gradient(90deg, #001F3F 0%, #00FFFF 100%); /* Darker Blue to Neon Blue */
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: linear-gradient(90deg, #00ffff 0%, #006699 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #00FFFF 0%, #001F3F 100%); /* Reversed gradient on hover */
 }
 
 /* Animations */
