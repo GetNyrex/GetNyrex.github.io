@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function checkSections() {
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const windowHeight = window.innerHeight;
-            const scrollPosition = window.pageYOffset;
+            const rect = section.getBoundingClientRect();
+            const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
 
-            if (scrollPosition > sectionTop + sectionHeight - windowHeight && scrollPosition < sectionTop + sectionHeight) {
+            if (isVisible) {
                 section.classList.add('active');
+            } else {
+                section.classList.remove('active');
             }
         });
     }
