@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Montserrat', Arial, sans-serif;
+    overflow: hidden; /* Hide the circular glow overflow */
 }
 
 .container {
@@ -20,6 +21,22 @@ body {
     letter-spacing: 2px;
     margin-bottom: 0.2em;
     text-shadow: 0 2px 20px #0ff, 0 0 2px #000;
+    position: relative; /* For the glow effect */
+    animation: floatText 5s ease-in-out infinite; /* Floating animation */
+}
+
+.title::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotateGlow 10s linear infinite;
+    z-index: -1; /* Behind the text */
 }
 
 .subtitle {
@@ -28,6 +45,7 @@ body {
     margin-bottom: 2em;
     font-weight: 400;
     text-shadow: 0 1px 8px #000;
+    animation: floatText 4s ease-in-out infinite; /* Floating animation */
 }
 
 .buttons {
@@ -74,4 +92,23 @@ body {
 
 .btn-secondary:hover, .btn-secondary:focus {
     background: linear-gradient(90deg, #00ffff 0%, #006699 100%); /* Reversed gradient on hover */
+}
+
+/* Animations */
+@keyframes rotateGlow {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes floatText {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
