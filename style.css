@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: radial-gradient(ellipse at top, #1a0033 0%, #000 80%);
+    background: radial-gradient(ellipse at top, #2d0909 0%, #000 80%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,12 +14,12 @@ body {
 }
 
 .title {
-    color: #9400D3; /* Indigo */
+    color: #fff; /* White */
     font-size: 5rem;
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 0.2em;
-    text-shadow: 0 2px 20px #9400D3, 0 0 2px #000;
+    text-shadow: 0 2px 20px #fff, 0 0 2px #000;
 }
 
 .subtitle {
@@ -37,7 +37,7 @@ body {
 }
 
 .btn {
-    background: linear-gradient(90deg, #4B0082 0%, #9400D3 100%); /* Dark Indigo to Indigo */
+    background: linear-gradient(90deg, #b71c1c 0%, #ff4444 100%);
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -45,7 +45,7 @@ body {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    box-shadow: 0 4px 24px rgba(148, 0, 211, 0.2); /* Indigo shadow */
+    box-shadow: 0 4px 24px rgba(255, 68, 68, 0.2);
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
@@ -63,15 +63,15 @@ body {
 }
 
 .btn:hover, .btn:focus {
-    background: linear-gradient(90deg, #9400D3 0%, #4B0082 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #ff4444 0%, #b71c1c 100%);
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 32px rgba(148, 0, 211, 0.4); /* Enhanced indigo shadow */
+    box-shadow: 0 8px 32px rgba(255, 68, 68, 0.4);
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #6A1B9A 0%, #9400D3 100%); /* Slightly lighter indigo */
+    background: linear-gradient(90deg, #d32f2f 0%, #ff4444 100%);
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: linear-gradient(90deg, #9400D3 0%, #6A1B9A 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #ff4444 0%, #d32f2f 100%);
 }
