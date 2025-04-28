@@ -4,13 +4,14 @@ body {
     min-height: 100vh;
     background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack content vertically */
     align-items: center;
     font-family: 'Montserrat', Arial, sans-serif;
 }
 
 .container {
     text-align: center;
+    padding: 50px 20px;
 }
 
 .title {
@@ -86,4 +87,94 @@ body {
     50% {
         transform: translateY(-10px);
     }
+}
+
+/* Feature Sections */
+.feature-section {
+    background-color: #111;
+    color: #fff;
+    padding: 60px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(50px); /* Start hidden */
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.feature-section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.feature-text {
+    flex: 1 1 400px;
+    text-align: left;
+}
+
+.feature-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #1F51FF;
+}
+
+.feature-text p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.feature-image {
+    flex: 1 1 400px;
+    text-align: center;
+}
+
+.feature-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Feature Grid */
+.feature-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.feature-item i {
+    font-size: 3rem;
+    color: #1F51FF;
+    margin-bottom: 15px;
+}
+
+.feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.feature-item p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #ccc;
 }
