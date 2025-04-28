@@ -1,3 +1,4 @@
+/* Button Base */
 .btn {
     background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%);
     color: #fff;
@@ -7,49 +8,62 @@
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    box-shadow: 0 0 10px #1F51FF, 0 0 20px #1F51FF; /* Base glow */
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    /* Edge shadows only (no glow) */
+    box-shadow: 
+        4px 0 8px -4px rgba(31, 81, 255, 0.7),   /* Right edge */
+        -4px 0 8px -4px rgba(31, 81, 255, 0.7),  /* Left edge */
+        0 4px 8px -4px rgba(31, 81, 255, 0.7),   /* Bottom edge */
+        0 -4px 8px -4px rgba(31, 81, 255, 0.5);  /* Top edge */
+    transition: all 0.2s ease;
     position: relative;
-    overflow: hidden;
 }
 
-/* Pulsating Animation */
+/* Remove glow animations */
 @keyframes glow-pulse {
-    0%, 100% {
-        box-shadow: 0 0 10px #1F51FF, 0 0 20px #1F51FF;
-    }
-    50% {
-        box-shadow: 0 0 20px #1F51FF, 0 0 40px #1F51FF;
-    }
+    /* Empty - animations removed */
 }
 
-.btn {
-    animation: glow-pulse 2s ease-in-out infinite;
-}
-
-/* Hover Enhancement */
+/* Hover State */
 .btn:hover, .btn:focus {
-    animation: none; /* Stop pulse on hover */
-    box-shadow: 0 0 30px #1F51FF, 0 0 60px #1F51FF;
+    box-shadow: 
+        6px 0 12px -4px rgba(31, 81, 255, 0.9),
+        -6px 0 12px -4px rgba(31, 81, 255, 0.9),
+        0 6px 12px -4px rgba(31, 81, 255, 0.9),
+        0 -6px 12px -4px rgba(31, 81, 255, 0.7);
     transform: translateY(-2px) scale(1.04);
 }
 
-/* Secondary Button Adjustments */
+/* Secondary Button */
 .btn-secondary {
     background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%);
-    animation: glow-pulse-secondary 2s ease-in-out infinite;
-}
-
-@keyframes glow-pulse-secondary {
-    0%, 100% {
-        box-shadow: 0 0 10px #1F51FF, 0 0 20px #1F51FF;
-    }
-    50% {
-        box-shadow: 0 0 20px #1F51FF, 0 0 40px #1F51FF;
-    }
+    box-shadow: 
+        4px 0 8px -4px rgba(31, 81, 255, 0.5),
+        -4px 0 8px -4px rgba(31, 81, 255, 0.5),
+        0 4px 8px -4px rgba(31, 81, 255, 0.5),
+        0 -4px 8px -4px rgba(31, 81, 255, 0.3);
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    animation: none;
-    box-shadow: 0 0 30px #1F51FF, 0 0 60px #1F51FF;
+    box-shadow: 
+        6px 0 12px -4px rgba(31, 81, 255, 0.7),
+        -6px 0 12px -4px rgba(31, 81, 255, 0.7),
+        0 6px 12px -4px rgba(31, 81, 255, 0.7),
+        0 -6px 12px -4px rgba(31, 81, 255, 0.5);
+}
+
+/* Add this to your existing CSS */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    box-shadow: 
+        0 -20px 40px -10px rgba(31, 81, 255, 0.15) inset,  /* Bottom */
+        0 20px 40px -10px rgba(31, 81, 255, 0.15) inset,   /* Top */
+        20px 0 40px -10px rgba(31, 81, 255, 0.15) inset,   /* Left */
+        -20px 0 40px -10px rgba(31, 81, 255, 0.15) inset;  /* Right */
 }
