@@ -4,7 +4,7 @@ body {
     min-height: 100vh;
     background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
     display: flex;
-    flex-direction: column; /* Stack content vertically */
+    flex-direction: column;
     align-items: center;
     font-family: 'Montserrat', Arial, sans-serif;
 }
@@ -15,13 +15,13 @@ body {
 }
 
 .title {
-    color: #1F51FF; /* Dark Neon Blue */
+    color: #1F51FF;
     font-size: 5rem;
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 0.2em;
     text-shadow: 0 2px 20px #1F51FF, 0 0 2px #000;
-    animation: floatText 5s ease-in-out infinite; /* Floating animation */
+    animation: floatText 5s ease-in-out infinite;
 }
 
 .subtitle {
@@ -30,7 +30,7 @@ body {
     margin-bottom: 2em;
     font-weight: 400;
     text-shadow: 0 1px 8px #000;
-    animation: floatText 4s ease-in-out infinite; /* Floating animation */
+    animation: floatText 4s ease-in-out infinite;
 }
 
 .buttons {
@@ -40,7 +40,7 @@ body {
 }
 
 .btn {
-    background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%); /* Dark Blue to Dark Neon Blue */
+    background: linear-gradient(90deg, #00008B 0%, #1F51FF 100%);
     color: #fff;
     padding: 1em 2.5em;
     border: none;
@@ -48,7 +48,7 @@ body {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 700;
-    box-shadow: 0 4px 24px rgba(31, 81, 255, 0.2); /* Dark Neon Blue shadow */
+    box-shadow: 0 4px 24px rgba(31, 81, 255, 0.2);
     transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
@@ -66,20 +66,19 @@ body {
 }
 
 .btn:hover, .btn:focus {
-    background: linear-gradient(90deg, #1F51FF 0%, #00008B 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #1F51FF 0%, #00008B 100%);
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 8px 32px rgba(31, 81, 255, 0.4); /* Enhanced Dark Neon Blue shadow */
+    box-shadow: 0 8px 32px rgba(31, 81, 255, 0.4);
 }
 
 .btn-secondary {
-    background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%); /* Darker Blue to Dark Neon Blue */
+    background: linear-gradient(90deg, #001F3F 0%, #1F51FF 100%);
 }
 
 .btn-secondary:hover, .btn-secondary:focus {
-    background: linear-gradient(90deg, #1F51FF 0%, #001F3F 100%); /* Reversed gradient on hover */
+    background: linear-gradient(90deg, #1F51FF 0%, #001F3F 100%);
 }
 
-/* Animations */
 @keyframes floatText {
     0%, 100% {
         transform: translateY(0px);
@@ -100,20 +99,12 @@ body {
 
 /* Feature Sections */
 .feature-section {
-    background: radial-gradient(ellipse at top, #09092d 0%, #000 80%); /* Same as body */
+    background: radial-gradient(ellipse at top, #09092d 0%, #000 80%);
     color: #fff;
     padding: 60px 20px;
     width: 100%;
     box-sizing: border-box;
-   /* opacity: 0;  Start completely transparent */
-    /*transform: translateY(50px);  Start hidden */
-    /*transition: opacity 0.8s ease, transform 0.8s ease;*/
 }
-
-/*.feature-section.active {
-    opacity: 1;  Fade in
-    transform: translateY(0);
-}*/
 
 .feature-content {
     max-width: 1200px;
@@ -128,7 +119,7 @@ body {
 .feature-text {
     flex: 1 1 400px;
     text-align: left;
-    animation: floatElement 5s ease-in-out infinite; /* Apply floating animation */
+    animation: floatElement 5s ease-in-out infinite;
 }
 
 .feature-text h2 {
@@ -145,7 +136,7 @@ body {
 .feature-image {
     flex: 1 1 400px;
     text-align: center;
-    animation: floatElement 6s ease-in-out infinite; /* Apply floating animation */
+    animation: floatElement 6s ease-in-out infinite;
 }
 
 .feature-image img {
