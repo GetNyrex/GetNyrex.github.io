@@ -96,7 +96,7 @@ body {
     padding: 60px 20px;
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.6); /* Add a shadow */
+    /*box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.6);*/ /* Removed shadow */
     opacity: 0;
     transform: translateY(50px); /* Start hidden */
     transition: opacity 0.8s ease, transform 0.8s ease;
