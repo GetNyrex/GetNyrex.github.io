@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkSections() {
         sections.forEach(section => {
             const rect = section.getBoundingClientRect();
-            const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            const isVisible = rect.top <= windowHeight * 0.75 && rect.bottom >= 0; // Adjusted trigger point
 
             if (isVisible) {
                 section.classList.add('active');
