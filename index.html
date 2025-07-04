@@ -3,76 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truce</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:800,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>BlindX - The Ultimate Advantage</title>
+    <style>
+        /* --- Google Font --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+        /* --- CSS Variables --- */
+        :root {
+            --bg-color: #020617; /* Deep Navy/Black */
+            --primary-blue: #0ea5e9;
+            --secondary-purple: #8b5cf6;
+            --glow-blue: rgba(14, 165, 233, 0.5);
+            --glow-purple: rgba(139, 92, 246, 0.4);
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --surface-color: rgba(15, 23, 42, 0.7); /* Translucent Slate Blue */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-main: 'Inter', sans-serif;
+        }
+
+        /* --- Global Styles --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        /* --- INTERACTIVE CURSOR GLOW --- */
+        #cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--glow-blue) 0%, var(--glow-purple) 60%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            pointer-events: none;
+            /* JS will handle transform for smooth movement */
+        }
+
+        /* Hide glow on mobile for performance and usability */
+        @media (max-width: 768px) {
+            #cursor-glow { display: none; }
+        }
+
+        /* --- Scroll-in Animations --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Header --- */
+        .main-header {
+            padding: 20px 0;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: rgba(2, 6, 23, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 2.2rem; font-weight: 900; text-decoration: none; color: var(--text-color); }
+        .logo-x { color: var(--primary-blue); }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -4px;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            background: -webkit-linear-gradient(45deg, #fff, #a7a7a7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 span {
+            background: -webkit-linear-gradient(45deg, var(--primary-blue), var(--secondary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.6;
+        }
+        .btn {
+            padding: 16px 32px; border-radius: 8px; font-weight: 700;
+            font-size: 1rem; text-decoration: none; transition: all 0.3s ease;
+            border: 2px solid transparent; display: inline-block;
+        }
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 0 20px var(--glow-blue);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px var(--glow-blue);
+        }
+
+        /* --- Products Section --- */
+        #products { padding: 120px 0; }
+        .section-title {
+            text-align: center; font-size: 3.5rem;
+            font-weight: 900; margin-bottom: 1rem; letter-spacing: -2px;
+        }
+        .section-subtitle {
+            text-align: center; color: var(--text-muted);
+            font-size: 1.1rem; margin-bottom: 5rem;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* --- Upgraded Product Card --- */
+        .product-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .product-card .line {
+            position: absolute; background-color: #fff;
+            transition: transform 0.4s ease-in-out;
+        }
+        .line-top { top: 0; left: 0; width: 100%; height: 1px; transform: scaleX(0); transform-origin: left; }
+        .line-right { top: 0; right: 0; width: 1px; height: 100%; transform: scaleY(0); transform-origin: top; }
+        .line-bottom { bottom: 0; right: 0; width: 100%; height: 1px; transform: scaleX(0); transform-origin: right; }
+        .line-left { bottom: 0; left: 0; width: 1px; height: 100%; transform: scaleY(0); transform-origin: bottom; }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 40px var(--glow-blue);
+        }
+        .product-card:hover .line { transform: scaleX(1) scaleY(1); }
+        .product-card:hover .line-top { transition-delay: 0s; }
+        .product-card:hover .line-right { transition-delay: 0.1s; }
+        .product-card:hover .line-bottom { transition-delay: 0.2s; }
+        .product-card:hover .line-left { transition-delay: 0.3s; }
+
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+        .product-header h3 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+        .product-tag {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .product-card .description { color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        .price-tag {
+            font-size: 2rem; font-weight: 900; margin-bottom: 1.5rem;
+        }
+        .price-tag span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+        .btn-purchase {
+            width: 100%; text-align: center; background-color: transparent;
+            border: 1px solid var(--border-color); color: var(--text-color);
+        }
+        .product-card:hover .btn-purchase {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: #fff;
+            box-shadow: 0 0 20px var(--glow-blue);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1 class="title">TRUCE</h1>
-        <p class="subtitle">Truce</p>
-        <div class="buttons">
-            <a href="#" class="btn" aria-label="Download Indus Executor">
-                <i class="fa-solid fa-download" aria-hidden="true"></i> Download Now <span class="arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a href="https://discord.gg/dcrZHzKVeT" class="btn btn-secondary" aria-label="Join Discord server">
-                Discord Server <span class="arrow" aria-hidden="true">&rarr;</span>
-            </a>
+    <div id="cursor-glow"></div>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">Blind<span class="logo-x">X</span></a>
         </div>
-    </div>
+    </header>
 
-    <section class="feature-section" id="feature1" aria-labelledby="feature1-heading">
-        <div class="feature-content">
-            <div class="feature-text">
-                <h2 id="feature1-heading">Undetected &amp; Secure</h2>
-                <p>Execute while our security handles the bypass.</p>
+    <main>
+        <section class="hero">
+            <div class="container animate-on-scroll">
+                <h1>The Ultimate <span>Advantage.</span></h1>
+                <p>Gain a decisive edge with the most secure, high-performance solutions in the industry. Welcome to the next level of gaming.</p>
+                <a href="#products" class="btn btn-primary">Browse Products</a>
             </div>
-            <div class="feature-image">
-                <img src="indusnewss.png" alt="Indus Executor user interface" width="500" height="300">
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="feature-section" id="feature2" aria-labelledby="feature2-heading">
-        <div class="feature-content">
-            <div class="feature-text">
-                <h2 id="feature2-heading">Regular Updates</h2>
-                <p>Consistent updates for UI changes, improvements, and compatibility maintenance.</p>
-            </div>
-            <div class="feature-image">
-                <img src="indusnewss2.png" alt="Indus key system interface" width="500" height="300">
-            </div>
-        </div>
-    </section>
+        <section id="products">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Our Elite Suite</h2>
+                <p class="section-subtitle animate-on-scroll">Engineered for victory. Choose your solution.</p>
 
-    <section class="feature-section" id="feature3" aria-labelledby="feature3-heading">
-        <div class="feature-grid">
-            <div class="feature-item">
-                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-                <h3>High Performance</h3>
-                <p>Doesn't affect your in-game performance while running.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
-                <h3>Free &amp; Working</h3>
-                <p>Our executors and keys are free.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-                <h3>System Compatibility</h3>
-                <p>Works on Windows 10 &amp; 11.</p>
-            </div>
-        </div>
-    </section>
+                <div class="product-grid">
+                    <!-- Valorant Internal -->
+                    <div class="product-card animate-on-scroll">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>Valorant Internal</h3><span class="product-tag">Max Performance</span></div>
+                        <p class="description">Directly integrated for zero-latency performance. The choice for serious competitors.</p>
+                        <div class="price-tag">$49.99 <span>/ month</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
 
-    <footer class="site-footer" aria-label="Site footer">
-        <p>© 2025 Truce Executor.</p>
-        <p>Credits: Cursed</p>
-    </footer>
+                    <!-- Valorant External -->
+                    <div class="product-card animate-on-scroll" style="transition-delay: 100ms;">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>Valorant External</h3><span class="product-tag">Max Security</span></div>
+                        <p class="description">Prioritizes safety with an external overlay, providing essential features without compromise.</p>
+                        <div class="price-tag">$29.99 <span>/ month</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
 
-    <script src="script.js"></script>
+                    <!-- Apex External -->
+                    <div class="product-card animate-on-scroll" style="transition-delay: 200ms;">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>Apex External</h3><span class="product-tag">Feature-Rich</span></div>
+                        <p class="description">Dominate the Apex Games with advanced player/item glow, radar, and a flawless aimbot.</p>
+                        <div class="price-tag">$24.99 <span>/ month</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
+
+                    <!-- FiveM Internal -->
+                    <div class="product-card animate-on-scroll" style="transition-delay: 0ms;">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>FiveM Internal</h3><span class="product-tag">Full Control</span></div>
+                        <p class="description">The ultimate toolkit for any server. Features a powerful Lua executor and extensive ESP.</p>
+                        <div class="price-tag">$34.99 <span>/ month</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
+
+                    <!-- FiveM External -->
+                    <div class="product-card animate-on-scroll" style="transition-delay: 100ms;">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>FiveM External</h3><span class="product-tag">Safe & Simple</span></div>
+                        <p class="description">A resource-friendly menu focusing on utility ESP and triggerbot for a safe experience.</p>
+                        <div class="price-tag">$19.99 <span>/ month</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
+
+                    <!-- HWID Spoofer -->
+                    <div class="product-card animate-on-scroll" style="transition-delay: 200ms;">
+                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
+                        <div class="product-header"><h3>HWID Spoofer</h3><span class="product-tag">Temp & Perm</span></div>
+                        <p class="description">Bypass hardware bans with a single click. Our spoofer cleans all traces for a fresh start.</p>
+                        <div class="price-tag">$59.99 <span>/ lifetime</span></div>
+                        <a href="#" class="btn btn-purchase">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: 4rem 0; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+            <p>&copy; 2024 BlindX. All Rights Reserved.</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 600px; margin: 1rem auto 0 auto;">
+                Disclaimer: This website is a fictional creation for demonstrative purposes. The products listed are not real.
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        // --- Interactive Cursor Glow Logic ---
+        const glow = document.getElementById('cursor-glow');
+        window.addEventListener('mousemove', e => {
+            const { clientX, clientY } = e;
+            // Use transform for smooth, hardware-accelerated movement.
+            // We subtract half the glow's width/height to center it on the cursor.
+            glow.style.transform = `translate(${clientX - glow.offsetWidth / 2}px, ${clientY - glow.offsetHeight / 2}px)`;
+        });
+
+        // --- Scroll-in Animation Logic ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+        elementsToAnimate.forEach(el => observer.observe(el));
+    </script>
+
 </body>
 </html>
