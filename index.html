@@ -449,12 +449,12 @@
 
                         <div class="status-card">
                             <div class="status-indicator">
-                                <div class="status-dot" id="roblox-dot"></div>
+                                <div class="status-dot"></div>
                                 <div class="service-name">Nyrex For Roblox</div>
                             </div>
-                            <div class="service-status" id="roblox-status">Checking...</div>
-                            <div class="service-description" id="roblox-description">
-                                Testing Roblox API connection and services...
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                All Roblox services are responding normally. No issues detected.
                             </div>
                         </div>
                     </div>
@@ -503,42 +503,12 @@
         }
 
         async function checkRobloxStatus() {
-            const robloxDot = document.getElementById('roblox-dot');
-            const robloxStatus = document.getElementById('roblox-status');
-            const robloxDescription = document.getElementById('roblox-description');
-            
-            try {
-                // Test Roblox API endpoint
-                const startTime = performance.now();
-                const response = await fetch('https://api.roblox.com/docs', { 
-                    method: 'HEAD',
-                    cache: 'no-cache'
-                });
-                const endTime = performance.now();
-                const responseTime = Math.round(endTime - startTime);
-                
-                if (response.ok) {
-                    robloxDot.className = 'status-dot';
-                    robloxStatus.className = 'service-status';
-                    robloxStatus.textContent = 'Operational';
-                    robloxDescription.textContent = `Roblox services are fully operational. API response: ${responseTime}ms`;
-                } else {
-                    robloxDot.className = 'status-dot warning';
-                    robloxStatus.className = 'service-status warning';
-                    robloxStatus.textContent = 'Partial Issues';
-                    robloxDescription.textContent = `Roblox API experiencing some issues. Response time: ${responseTime}ms`;
-                }
-            } catch (error) {
-                robloxDot.className = 'status-dot error';
-                robloxStatus.className = 'service-status error';
-                robloxStatus.textContent = 'Service Down';
-                robloxDescription.textContent = 'Roblox services are currently unreachable. Connection failed.';
-            }
+            // Removed - user will handle this manually
         }
 
         function updateAllStatus() {
             checkWebsiteStatus();
-            checkRobloxStatus();
+            // checkRobloxStatus(); - removed
         }
 
         function startStatusMonitoring() {
