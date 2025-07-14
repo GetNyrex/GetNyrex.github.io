@@ -438,23 +438,23 @@
                     <div class="status-cards">
                         <div class="status-card">
                             <div class="status-indicator">
-                                <div class="status-dot"></div>
+                                <div class="status-dot" id="website-dot"></div>
                                 <div class="service-name">Main Website</div>
                             </div>
-                            <div class="service-status">Operational</div>
-                            <div class="service-description">
-                                All systems are running normally. Response time: ~120ms
+                            <div class="service-status" id="website-status">Checking...</div>
+                            <div class="service-description" id="website-description">
+                                Testing connection and measuring response time...
                             </div>
                         </div>
 
                         <div class="status-card">
                             <div class="status-indicator">
-                                <div class="status-dot"></div>
+                                <div class="status-dot" id="roblox-dot"></div>
                                 <div class="service-name">Nyrex For Roblox</div>
                             </div>
-                            <div class="service-status">Operational</div>
-                            <div class="service-description">
-                                All Roblox services are responding normally. No issues detected.
+                            <div class="service-status" id="roblox-status">Checking...</div>
+                            <div class="service-description" id="roblox-description">
+                                Testing Roblox API connection and services...
                             </div>
                         </div>
                     </div>
@@ -466,17 +466,105 @@
     </main>
 
     <script>
+        // Real-time status monitoring
+        let statusCheckInterval;
+
+        async function checkWebsiteStatus() {
+            const websiteDot = document.getElementById('website-dot');
+            const websiteStatus = document.getElementById('website-status');
+            const websiteDescription = document.getElementById('website-description');
+            
+            try {
+                const startTime = performance.now();
+                const response = await fetch(window.location.href, { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                if (response.ok) {
+                    websiteDot.className = 'status-dot';
+                    websiteStatus.className = 'service-status';
+                    websiteStatus.textContent = 'Operational';
+                    websiteDescription.textContent = `All systems are running normally. Response time: ${responseTime}ms`;
+                } else {
+                    websiteDot.className = 'status-dot warning';
+                    websiteStatus.className = 'service-status warning';
+                    websiteStatus.textContent = 'Partial Issues';
+                    websiteDescription.textContent = `Server responding with issues. Response time: ${responseTime}ms`;
+                }
+            } catch (error) {
+                websiteDot.className = 'status-dot error';
+                websiteStatus.className = 'service-status error';
+                websiteStatus.textContent = 'Service Down';
+                websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
+            }
+        }
+
+        async function checkRobloxStatus() {
+            const robloxDot = document.getElementById('roblox-dot');
+            const robloxStatus = document.getElementById('roblox-status');
+            const robloxDescription = document.getElementById('roblox-description');
+            
+            try {
+                // Test Roblox API endpoint
+                const startTime = performance.now();
+                const response = await fetch('https://api.roblox.com/docs', { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                if (response.ok) {
+                    robloxDot.className = 'status-dot';
+                    robloxStatus.className = 'service-status';
+                    robloxStatus.textContent = 'Operational';
+                    robloxDescription.textContent = `Roblox services are fully operational. API response: ${responseTime}ms`;
+                } else {
+                    robloxDot.className = 'status-dot warning';
+                    robloxStatus.className = 'service-status warning';
+                    robloxStatus.textContent = 'Partial Issues';
+                    robloxDescription.textContent = `Roblox API experiencing some issues. Response time: ${responseTime}ms`;
+                }
+            } catch (error) {
+                robloxDot.className = 'status-dot error';
+                robloxStatus.className = 'service-status error';
+                robloxStatus.textContent = 'Service Down';
+                robloxDescription.textContent = 'Roblox services are currently unreachable. Connection failed.';
+            }
+        }
+
+        function updateAllStatus() {
+            checkWebsiteStatus();
+            checkRobloxStatus();
+        }
+
+        function startStatusMonitoring() {
+            updateAllStatus(); // Check immediately
+            statusCheckInterval = setInterval(updateAllStatus, 30000); // Check every 30 seconds
+        }
+
+        function stopStatusMonitoring() {
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
+        }
+
         // Navigation functions
         function showStatus() {
             document.querySelector('.hero').style.display = 'none';
             document.querySelector('.status-page').classList.add('active');
             window.scrollTo(0, 0);
+            startStatusMonitoring(); // Start monitoring when status page is shown
         }
 
         function showHome() {
             document.querySelector('.status-page').classList.remove('active');
             document.querySelector('.hero').style.display = 'flex';
             window.scrollTo(0, 0);
+            stopStatusMonitoring(); // Stop monitoring when leaving status page
         }
 
         // Smooth scrolling for navigation links
