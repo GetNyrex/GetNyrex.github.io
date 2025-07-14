@@ -26,7 +26,6 @@
             padding: 0 20px;
         }
 
-        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -75,7 +74,6 @@
             color: #00ffff;
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -194,7 +192,6 @@
             font-size: 18px;
         }
 
-        /* Status Page */
         .status-page {
             min-height: 100vh;
             padding: 120px 0 80px;
@@ -324,7 +321,6 @@
             font-size: 16px;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -369,12 +365,10 @@
             }
         }
 
-        /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -466,7 +460,6 @@
     </main>
 
     <script>
-        // Real-time status monitoring
         let statusCheckInterval;
 
         async function checkWebsiteStatus() {
@@ -503,17 +496,15 @@
         }
 
         async function checkRobloxStatus() {
-            // Removed - user will handle this manually
         }
 
         function updateAllStatus() {
             checkWebsiteStatus();
-            // checkRobloxStatus(); - removed
         }
 
         function startStatusMonitoring() {
-            updateAllStatus(); // Check immediately
-            statusCheckInterval = setInterval(updateAllStatus, 30000); // Check every 30 seconds
+            updateAllStatus();
+            statusCheckInterval = setInterval(updateAllStatus, 30000);
         }
 
         function stopStatusMonitoring() {
@@ -522,30 +513,27 @@
             }
         }
 
-        // Navigation functions
         function showStatus() {
             document.querySelector('.hero').style.display = 'none';
             document.querySelector('.status-page').classList.add('active');
             window.scrollTo(0, 0);
-            startStatusMonitoring(); // Start monitoring when status page is shown
+            startStatusMonitoring();
         }
 
         function showHome() {
             document.querySelector('.status-page').classList.remove('active');
             document.querySelector('.hero').style.display = 'flex';
             window.scrollTo(0, 0);
-            stopStatusMonitoring(); // Stop monitoring when leaving status page
+            stopStatusMonitoring();
         }
 
-        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
                 
-                // Handle special cases
                 if (href === '#status') {
                     e.preventDefault();
-                    return; // Function is handled by onclick
+                    return;
                 }
                 
                 if (href === '#home') {
@@ -554,7 +542,6 @@
                     return;
                 }
                 
-                // Handle other links normally
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
@@ -565,7 +552,6 @@
             });
         });
 
-        // Add scroll effect to header
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
@@ -575,7 +561,6 @@
             }
         });
 
-        // Add subtle parallax effect to hero
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             if (hero.style.display !== 'none') {
