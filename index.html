@@ -74,39 +74,6 @@
             color: #00ffff;
         }
 
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .sign-in {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-
-        .sign-in:hover {
-            opacity: 1;
-        }
-
-        .sign-up {
-            background: #00ffff;
-            color: #000000;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .sign-up:hover {
-            background: #00e6e6;
-            transform: translateY(-1px);
-        }
-
         /* Hero Section */
         .hero {
             height: 100vh;
@@ -176,7 +143,7 @@
             align-items: center;
         }
 
-        .store-btn {
+        .download-btn {
             background: #00ffff;
             color: #000000;
             padding: 15px 30px;
@@ -190,12 +157,12 @@
             gap: 10px;
         }
 
-        .store-btn:hover {
+        .download-btn:hover {
             background: #00e6e6;
             transform: translateY(-2px);
         }
 
-        .store-btn::before {
+        .download-btn::before {
             content: '→';
             font-size: 18px;
         }
@@ -226,6 +193,136 @@
             font-size: 18px;
         }
 
+        /* Status Page */
+        .status-page {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: none;
+        }
+
+        .status-page.active {
+            display: block;
+        }
+
+        .status-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .status-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ffffff;
+        }
+
+        .status-title .highlight {
+            color: #00ffff;
+        }
+
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.warning {
+            background: #ffaa00;
+        }
+
+        .status-dot.error {
+            background: #ff4444;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .service-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .service-status {
+            font-size: 14px;
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .service-status.warning {
+            color: #ffaa00;
+        }
+
+        .service-status.error {
+            color: #ff4444;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            background: #00ffff;
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .back-btn:hover {
+            background: #00e6e6;
+            transform: translateY(-2px);
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 16px;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -234,6 +331,10 @@
 
             .main-title {
                 font-size: 2.5rem;
+            }
+
+            .status-title {
+                font-size: 2rem;
             }
 
             .hero-description {
@@ -246,7 +347,7 @@
                 gap: 15px;
             }
 
-            .store-btn, .discord-btn {
+            .download-btn, .discord-btn {
                 width: 200px;
                 justify-content: center;
             }
@@ -255,6 +356,15 @@
                 width: 50px;
                 height: 50px;
                 font-size: 24px;
+            }
+
+            .status-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .status-card {
+                padding: 20px;
             }
         }
 
@@ -289,23 +399,16 @@
                 Nyrex<span class="highlight">.lol</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#store">Store</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#discord">Discord</a></li>
-                <li><a href="#configs">Configs</a></li>
-                <li><a href="#status">Status</a></li>
+                <li><a href="#status" onclick="showStatus()">Status</a></li>
             </ul>
-            <div class="auth-buttons">
-                <a href="#" class="sign-in">Sign in</a>
-                <a href="#" class="sign-up">Sign up</a>
-            </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" id="home">
             <div class="hero-content">
-
-                
                 <h1 class="main-title">
                     Nyrex<span class="highlight">.lol</span>
                 </h1>
@@ -319,19 +422,105 @@
                 </p>
                 
                 <div class="cta-buttons">
-                    <a href="#store" class="store-btn">Download</a>
+                    <a href="#download" class="download-btn">Download</a>
                     <a href="#discord" class="discord-btn">Discord</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="status-page" id="status-section">
+            <div class="container">
+                <div class="status-content">
+                    <h2 class="status-title">
+                        System <span class="highlight">Status</span>
+                    </h2>
+                    
+                    <div class="status-cards">
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <div class="service-name">Main Website</div>
+                            </div>
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                All systems are running normally. Response time: ~120ms
+                            </div>
+                        </div>
+
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <div class="service-name">Discord Bot</div>
+                            </div>
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                Discord services are fully operational. Uptime: 99.9%
+                            </div>
+                        </div>
+
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <div class="service-name">API Services</div>
+                            </div>
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                All API endpoints are responding normally. No issues detected.
+                            </div>
+                        </div>
+
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <div class="service-name">Database</div>
+                            </div>
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                Database connections are stable. Query performance: Excellent
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#home" class="back-btn" onclick="showHome()">Back to Home</a>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // Navigation functions
+        function showStatus() {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.status-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            document.querySelector('.status-page').classList.remove('active');
+            document.querySelector('.hero').style.display = 'flex';
+            window.scrollTo(0, 0);
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                
+                // Handle special cases
+                if (href === '#status') {
+                    e.preventDefault();
+                    return; // Function is handled by onclick
+                }
+                
+                if (href === '#home') {
+                    e.preventDefault();
+                    showHome();
+                    return;
+                }
+                
+                // Handle other links normally
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth'
@@ -353,8 +542,10 @@
         // Add subtle parallax effect to hero
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
-            const scrolled = window.pageYOffset;
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            if (hero.style.display !== 'none') {
+                const scrolled = window.pageYOffset;
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
         });
     </script>
 </body>
