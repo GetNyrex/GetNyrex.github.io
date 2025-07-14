@@ -3,313 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlindX - The Ultimate Advantage</title>
+    <title>Nyrex.lol</title>
     <style>
-        /* --- Google Font --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-
-        /* --- CSS Variables --- */
-        :root {
-            --bg-color: #020617; /* Deep Navy/Black */
-            --primary-blue: #0ea5e9;
-            --secondary-purple: #8b5cf6;
-            --glow-blue: rgba(14, 165, 233, 0.5);
-            --glow-purple: rgba(139, 92, 246, 0.4);
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --surface-color: rgba(15, 23, 42, 0.7); /* Translucent Slate Blue */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-main: 'Inter', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* --- Global Styles --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
             overflow-x: hidden;
-        }
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
-
-        /* --- INTERACTIVE CURSOR GLOW --- */
-        #cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--glow-blue) 0%, var(--glow-purple) 60%, transparent 80%);
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: -1;
-            pointer-events: none;
-            /* JS will handle transform for smooth movement */
-        }
-
-        /* Hide glow on mobile for performance and usability */
-        @media (max-width: 768px) {
-            #cursor-glow { display: none; }
-        }
-
-        /* --- Scroll-in Animations --- */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-
-        /* --- Header --- */
-        .main-header {
-            padding: 20px 0;
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            background-color: rgba(2, 6, 23, 0.5);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-        }
-        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 2.2rem; font-weight: 900; text-decoration: none; color: var(--text-color); }
-        .logo-x { color: var(--primary-blue); }
-
-        /* --- Hero Section --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: 100px;
-        }
-        .hero h1 {
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 900;
-            letter-spacing: -4px;
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            background: -webkit-linear-gradient(45deg, #fff, #a7a7a7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero h1 span {
-            background: -webkit-linear-gradient(45deg, var(--primary-blue), var(--secondary-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 2.5rem auto;
             line-height: 1.6;
         }
-        .btn {
-            padding: 16px 32px; border-radius: 8px; font-weight: 700;
-            font-size: 1rem; text-decoration: none; transition: all 0.3s ease;
-            border: 2px solid transparent; display: inline-block;
-        }
-        .btn-primary {
-            background-color: var(--primary-blue);
-            color: white;
-            box-shadow: 0 0 20px var(--glow-blue);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 35px var(--glow-blue);
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* --- Products Section --- */
-        #products { padding: 120px 0; }
-        .section-title {
-            text-align: center; font-size: 3.5rem;
-            font-weight: 900; margin-bottom: 1rem; letter-spacing: -2px;
-        }
-        .section-subtitle {
-            text-align: center; color: var(--text-muted);
-            font-size: 1.1rem; margin-bottom: 5rem;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2.5rem;
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* --- Upgraded Product Card --- */
-        .product-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
+        nav {
             display: flex;
-            flex-direction: column;
-            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            justify-content: space-between;
+            align-items: center;
         }
-        .product-card .line {
-            position: absolute; background-color: #fff;
-            transition: transform 0.4s ease-in-out;
-        }
-        .line-top { top: 0; left: 0; width: 100%; height: 1px; transform: scaleX(0); transform-origin: left; }
-        .line-right { top: 0; right: 0; width: 1px; height: 100%; transform: scaleY(0); transform-origin: top; }
-        .line-bottom { bottom: 0; right: 0; width: 100%; height: 1px; transform: scaleX(0); transform-origin: right; }
-        .line-left { bottom: 0; left: 0; width: 1px; height: 100%; transform: scaleY(0); transform-origin: bottom; }
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-blue);
-            box-shadow: 0 10px 40px var(--glow-blue);
-        }
-        .product-card:hover .line { transform: scaleX(1) scaleY(1); }
-        .product-card:hover .line-top { transition-delay: 0s; }
-        .product-card:hover .line-right { transition-delay: 0.1s; }
-        .product-card:hover .line-bottom { transition-delay: 0.2s; }
-        .product-card:hover .line-left { transition-delay: 0.3s; }
-
-        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-        .product-header h3 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
-        .product-tag {
-            background-color: var(--border-color);
-            color: var(--text-color);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .logo {
+            font-size: 24px;
             font-weight: 600;
-            white-space: nowrap;
+            color: #ffffff;
         }
-        .product-card .description { color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
-        .price-tag {
-            font-size: 2rem; font-weight: 900; margin-bottom: 1.5rem;
+
+        .logo .highlight {
+            color: #00ffff;
         }
-        .price-tag span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
-        .btn-purchase {
-            width: 100%; text-align: center; background-color: transparent;
-            border: 1px solid var(--border-color); color: var(--text-color);
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
         }
-        .product-card:hover .btn-purchase {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
-            color: #fff;
-            box-shadow: 0 0 20px var(--glow-blue);
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #00ffff;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .sign-in {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in:hover {
+            opacity: 1;
+        }
+
+        .sign-up {
+            background: #00ffff;
+            color: #000000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .sign-up:hover {
+            background: #00e6e6;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            margin-bottom: 40px;
+        }
+
+        .brand-circles {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .circle {
+            width: 60px;
+            height: 60px;
+            background: #00ffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .main-title .highlight {
+            color: #00ffff;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .store-btn {
+            background: #00ffff;
+            color: #000000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .store-btn:hover {
+            background: #00e6e6;
+            transform: translateY(-2px);
+        }
+
+        .store-btn::before {
+            content: '→';
+            font-size: 18px;
+        }
+
+        .discord-btn {
+            background: transparent;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .discord-btn:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        .discord-btn::before {
+            content: '💬';
+            font-size: 18px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 16px;
+                padding: 0 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .store-btn, .discord-btn {
+                width: 200px;
+                justify-content: center;
+            }
+
+            .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00e6e6;
         }
     </style>
 </head>
 <body>
-
-    <div id="cursor-glow"></div>
-
-    <header class="main-header">
-        <div class="container">
-            <a href="#" class="logo">Blind<span class="logo-x">X</span></a>
-        </div>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                Nyrex<span class="highlight">.lol</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#store">Store</a></li>
+                <li><a href="#discord">Discord</a></li>
+                <li><a href="#configs">Configs</a></li>
+                <li><a href="#status">Status</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="sign-in">Sign in</a>
+                <a href="#" class="sign-up">Sign up</a>
+            </div>
+        </nav>
     </header>
 
     <main>
         <section class="hero">
-            <div class="container animate-on-scroll">
-                <h1>The Ultimate <span>Advantage.</span></h1>
-                <p>Gain a decisive edge with the most secure, high-performance solutions in the industry. Welcome to the next level of gaming.</p>
-                <a href="#products" class="btn btn-primary">Browse Products</a>
-            </div>
-        </section>
+            <div class="hero-content">
 
-        <section id="products">
-            <div class="container">
-                <h2 class="section-title animate-on-scroll">Our Elite Suite</h2>
-                <p class="section-subtitle animate-on-scroll">Engineered for victory. Choose your solution.</p>
-
-                <div class="product-grid">
-                    <!-- Valorant Internal -->
-                    <div class="product-card animate-on-scroll">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>Valorant Internal</h3><span class="product-tag">Max Performance</span></div>
-                        <p class="description">Directly integrated for zero-latency performance. The choice for serious competitors.</p>
-                        <div class="price-tag">$49.99 <span>/ month</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
-
-                    <!-- Valorant External -->
-                    <div class="product-card animate-on-scroll" style="transition-delay: 100ms;">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>Valorant External</h3><span class="product-tag">Max Security</span></div>
-                        <p class="description">Prioritizes safety with an external overlay, providing essential features without compromise.</p>
-                        <div class="price-tag">$29.99 <span>/ month</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
-
-                    <!-- Apex External -->
-                    <div class="product-card animate-on-scroll" style="transition-delay: 200ms;">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>Apex External</h3><span class="product-tag">Feature-Rich</span></div>
-                        <p class="description">Dominate the Apex Games with advanced player/item glow, radar, and a flawless aimbot.</p>
-                        <div class="price-tag">$24.99 <span>/ month</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
-
-                    <!-- FiveM Internal -->
-                    <div class="product-card animate-on-scroll" style="transition-delay: 0ms;">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>FiveM Internal</h3><span class="product-tag">Full Control</span></div>
-                        <p class="description">The ultimate toolkit for any server. Features a powerful Lua executor and extensive ESP.</p>
-                        <div class="price-tag">$34.99 <span>/ month</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
-
-                    <!-- FiveM External -->
-                    <div class="product-card animate-on-scroll" style="transition-delay: 100ms;">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>FiveM External</h3><span class="product-tag">Safe & Simple</span></div>
-                        <p class="description">A resource-friendly menu focusing on utility ESP and triggerbot for a safe experience.</p>
-                        <div class="price-tag">$19.99 <span>/ month</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
-
-                    <!-- HWID Spoofer -->
-                    <div class="product-card animate-on-scroll" style="transition-delay: 200ms;">
-                        <span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span>
-                        <div class="product-header"><h3>HWID Spoofer</h3><span class="product-tag">Temp & Perm</span></div>
-                        <p class="description">Bypass hardware bans with a single click. Our spoofer cleans all traces for a fresh start.</p>
-                        <div class="price-tag">$59.99 <span>/ lifetime</span></div>
-                        <a href="#" class="btn btn-purchase">View Details</a>
-                    </div>
+                
+                <h1 class="main-title">
+                    Nyrex<span class="highlight">.lol</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Providing the best user experience is our top priority. 
+                    We're committed to delivering a product that's not only 
+                    fast, but secure. We strive to make your experience as 
+                    enjoyable as possible. Our team works around the clock 
+                    to ensure our services are up and running, just for you.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="#store" class="store-btn">Download</a>
+                    <a href="#discord" class="discord-btn">Discord</a>
                 </div>
             </div>
         </section>
-
-        <footer style="text-align: center; padding: 4rem 0; border-top: 1px solid var(--border-color); margin-top: 4rem;">
-            <p>&copy; 2024 BlindX. All Rights Reserved.</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 600px; margin: 1rem auto 0 auto;">
-                Disclaimer: This website is a fictional creation for demonstrative purposes. The products listed are not real.
-            </p>
-        </footer>
     </main>
 
     <script>
-        // --- Interactive Cursor Glow Logic ---
-        const glow = document.getElementById('cursor-glow');
-        window.addEventListener('mousemove', e => {
-            const { clientX, clientY } = e;
-            // Use transform for smooth, hardware-accelerated movement.
-            // We subtract half the glow's width/height to center it on the cursor.
-            glow.style.transform = `translate(${clientX - glow.offsetWidth / 2}px, ${clientY - glow.offsetHeight / 2}px)`;
-        });
-
-        // --- Scroll-in Animation Logic ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
             });
-        }, {
-            threshold: 0.1
         });
 
-        const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
-        elementsToAnimate.forEach(el => observer.observe(el));
-    </script>
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
 
+        // Add subtle parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
 </body>
 </html>
