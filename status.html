@@ -279,7 +279,6 @@
             
             .status-cards {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
 
             .status-card {
@@ -346,11 +345,11 @@
 
                         <div class="status-card">
                             <div class="status-indicator">
-                                <div class="status-dot-error"></div>
+                                <div class="status-dot error" id="roblox-dot"></div>
                                 <div class="service-name">Nyrex For Roblox</div>
                             </div>
-                            <div class="status-dot-error">Service Down</div>
-                            <div class="service-description">
+                            <div class="service-status error" id="roblox-status">Service Down</div>
+                            <div class="service-description" id="roblox-description">
                                 Nyrex For Roblox is currently down. Please wait for an update!
                             </div>
                         </div>
@@ -394,12 +393,42 @@
             } catch (error) {
                 websiteDot.className = 'status-dot error';
                 websiteStatus.className = 'service-status error';
+                websiteStatus.textContent = 'Service Down';
                 websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
             }
         }
 
+        // Function to update Roblox service status
+        function updateRobloxStatus(status = 'down', message = 'Nyrex For Roblox is currently down. Please wait for an update!') {
+            const robloxDot = document.getElementById('roblox-dot');
+            const robloxStatus = document.getElementById('roblox-status');
+            const robloxDescription = document.getElementById('roblox-description');
+            
+            switch(status) {
+                case 'up':
+                    robloxDot.className = 'status-dot';
+                    robloxStatus.className = 'service-status';
+                    robloxStatus.textContent = 'Operational';
+                    break;
+                case 'warning':
+                    robloxDot.className = 'status-dot warning';
+                    robloxStatus.className = 'service-status warning';
+                    robloxStatus.textContent = 'Partial Issues';
+                    break;
+                case 'down':
+                default:
+                    robloxDot.className = 'status-dot error';
+                    robloxStatus.className = 'service-status error';
+                    robloxStatus.textContent = 'Service Down';
+                    break;
+            }
+            
+            robloxDescription.textContent = message;
+        }
+
         function updateAllStatus() {
             checkWebsiteStatus();
+            // You can call updateRobloxStatus() here if you want to check it programmatically
         }
 
         function startStatusMonitoring() {
@@ -416,8 +445,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Start status monitoring when the status page loads
             startStatusMonitoring();
-            // The page-wide fade-in animation is handled by CSS on .status-page itself
-            // Individual elements will also animate in due to their own animation properties
+            
+            // Set initial Roblox status to down (you can change this)
+            updateRobloxStatus('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
         });
 
         // Header scroll effect (kept for consistency if status page itself becomes scrollable)
@@ -431,6 +461,11 @@
                 header.style.padding = '20px 0';
             }
         });
+
+        // Example: You can call this function to change the status
+        // updateRobloxStatus('up', 'Nyrex For Roblox is now operational!');
+        // updateRobloxStatus('warning', 'Nyrex For Roblox is experiencing some issues.');
+        // updateRobloxStatus('down', 'Nyrex For Roblox is currently down for maintenance.');
     </script>
 </body>
 </html>
