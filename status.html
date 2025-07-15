@@ -355,6 +355,26 @@
                         </div>
                     </div>          
 
+                    <!-- Admin Controls - Hidden by default -->
+                    <div class="admin-controls" id="adminControls" style="margin-top: 30px; display: none; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="updateRobloxStatus('up', 'Nyrex For Roblox is now operational!')" 
+                                style="background: #00ff00; color: #000; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                            Set Operational
+                        </button>
+                        <button onclick="updateRobloxStatus('warning', 'Nyrex For Roblox is experiencing some issues.')" 
+                                style="background: #ffaa00; color: #000; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                            Set Warning
+                        </button>
+                        <button onclick="updateRobloxStatus('down', 'Nyrex For Roblox is currently down for maintenance.')" 
+                                style="background: #ff4444; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                            Set Down
+                        </button>
+                        <button onclick="hideAdminControls()" 
+                                style="background: #666; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-left: 20px;">
+                            Hide Controls
+                        </button>
+                    </div>
+
                     <a href="index.html" class="back-btn">Back to Home</a> <!-- Link back to index.html -->
                 </div>
             </div>
@@ -459,6 +479,27 @@
             } else {
                 header.style.background = 'rgba(10, 10, 10, 0.95)';
                 header.style.padding = '20px 0';
+            }
+        });
+
+        // Admin access functions
+        function showAdminControls() {
+            const password = prompt("Enter admin password:");
+            if (password === "nyrex2024") { // Change this to your desired password
+                document.getElementById('adminControls').style.display = 'flex';
+            } else if (password !== null) {
+                alert("Incorrect password!");
+            }
+        }
+
+        function hideAdminControls() {
+            document.getElementById('adminControls').style.display = 'none';
+        }
+
+        // Admin keyboard shortcut - Press Ctrl+Shift+A to show admin controls
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+                showAdminControls();
             }
         });
 
