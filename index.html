@@ -245,7 +245,7 @@
             min-height: 100vh;
             padding: 120px 0 80px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            display: none;
+            display: none; /* Initial state for fade-in */
             opacity: 0; /* Initial state for fade-in */
             transition: opacity 0.5s ease-in-out;
         }
@@ -498,8 +498,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
-                <li><a href="#status" onclick="showStatus()">Status</a></li>
-            </ul>
+                <li><a href="#status">Status</a></li> </ul>
         </nav>
     </header>
 
@@ -571,6 +570,7 @@
             
             try {
                 const startTime = performance.now();
+                // Fetching the current page to check its status (can be replaced with a specific endpoint if available)
                 const response = await fetch(window.location.href, { 
                     method: 'HEAD',
                     cache: 'no-cache'
@@ -597,39 +597,64 @@
             }
         }
 
-        async function checkRobloxStatus() {
-        }
-
         function updateAllStatus() {
             checkWebsiteStatus();
+            // You can add checkRobloxStatus() here if you implement it later
+        }
+
+        function startStatusMonitoring() {
+            updateAllStatus();
+            // Check status every 30 seconds
+            statusCheckInterval = setInterval(updateAllStatus, 30000);
+        }
+
+        function stopStatusMonitoring() {
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
         }
 
         function showStatus() {
+            // Hide the hero section
             document.querySelector('.hero').style.display = 'none';
+            
+            // Show the status page and apply its active class for fade-in
             const statusPage = document.querySelector('.status-page');
             statusPage.classList.add('active');
+            
+            // Scroll to the top of the page for a clean transition
             window.scrollTo(0, 0);
+            
+            // Start monitoring status updates
             startStatusMonitoring();
 
             // Reveal animations for status page elements
+            // Use a small delay to ensure display: block is applied before animations start
             setTimeout(() => {
                 document.querySelector('.status-title').classList.add('reveal');
                 document.querySelectorAll('.status-card').forEach((card, index) => {
-                    card.style.transitionDelay = `${0.1 * index}s`; // Stagger delay
+                    card.style.transitionDelay = `${0.1 * index}s`; // Stagger delay for cards
                     card.classList.add('reveal');
                 });
                 document.querySelector('.back-btn').classList.add('reveal');
-            }, 50); // Small delay to ensure display: block is applied
+            }, 50); 
         }
 
         function showHome() {
+            // Hide the status page
             const statusPage = document.querySelector('.status-page');
             statusPage.classList.remove('active');
+            
+            // Show the hero section
             document.querySelector('.hero').style.display = 'flex';
+            
+            // Scroll to the top of the page
             window.scrollTo(0, 0);
+            
+            // Stop status monitoring when leaving the status page
             stopStatusMonitoring();
 
-            // Remove reveal classes when going back to home
+            // Remove reveal classes when going back to home to reset for next time
             document.querySelector('.status-title').classList.remove('reveal');
             document.querySelectorAll('.status-card').forEach(card => {
                 card.classList.remove('reveal');
@@ -637,32 +662,31 @@
             document.querySelector('.back-btn').classList.remove('reveal');
         }
 
+        // Universal handler for all internal hash links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
                 
                 if (href === '#status') {
-                    e.preventDefault();
-                    showStatus(); // Call showStatus function when status link is clicked
-                    return;
-                }
-                
-                if (href === '#home') {
-                    e.preventDefault();
-                    showHome();
-                    return;
-                }
-                
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    e.preventDefault(); // Prevent default jump to #status anchor
+                    showStatus(); // Call our custom function to show status page
+                } else if (href === '#home') {
+                    e.preventDefault(); // Prevent default jump to #home anchor
+                    showHome(); // Call our custom function to show home page
+                } else {
+                    // For any other smooth scroll links (if you add more sections)
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault(); // Prevent default jump
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             });
         });
 
+        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
@@ -674,21 +698,23 @@
             }
         });
 
+        // Hero parallax effect on scroll
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
+            // Only apply parallax if the hero section is visible
             if (hero.style.display !== 'none') {
                 const scrolled = window.pageYOffset;
                 hero.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
         });
 
-        // Initialize status monitoring when the page loads
+        // Initial page load check
         document.addEventListener('DOMContentLoaded', () => {
             // Check if the current URL has the #status hash on load
             if (window.location.hash === '#status') {
                 showStatus();
             } else {
-                showHome(); // Ensure home section is visible by default
+                showHome(); // Ensure home section is visible and animated by default
             }
         });
     </script>
