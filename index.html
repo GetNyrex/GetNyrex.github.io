@@ -14,8 +14,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Changed body background to a continuous, fixed gradient */
             background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
-            background-attachment: fixed;
+            background-attachment: fixed; /* Ensures gradient covers full viewport even with short content */
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
@@ -761,34 +762,38 @@
             document.querySelector('.hero').style.display = 'none';
             const statusPage = document.querySelector('.status-page');
 
-            // 1. Ensure animation classes are removed before displaying
+            // 1. Ensure children are in their hidden state for animation
             document.querySelector('.status-title').classList.remove('reveal');
             document.querySelectorAll('.status-card').forEach(card => {
                 card.classList.remove('reveal');
             });
             document.querySelector('.back-btn').classList.remove('reveal');
 
-            // 2. Set display to block first, but it's still transparent (opacity: 0)
+            // 2. Set display to block first, but it's still transparent (opacity: 0 by default)
             statusPage.style.display = 'block'; 
 
             // 3. Force a reflow/repaint to ensure browser acknowledges display change before opacity
             void statusPage.offsetHeight; 
 
-            // 4. Now add 'active' to trigger the parent's fade-in
+            // 4. Now add 'active' class to parent, triggering its fade-in (opacity from 0 to 1)
             statusPage.classList.add('active'); 
 
             window.scrollTo(0, 0);
             startStatusMonitoring();
 
-            // 5. After a short delay, add 'reveal' to children for staggered animation
-            setTimeout(() => {
-                document.querySelector('.status-title').classList.add('reveal');
-                document.querySelectorAll('.status-card').forEach((card, index) => {
-                    card.style.transitionDelay = `${0.1 * index}s`; // Staggered delay
-                    card.classList.add('reveal');
-                });
-                document.querySelector('.back-btn').classList.add('reveal');
-            }, 50); // Small delay to allow initial render
+            // 5. Use requestAnimationFrame for smoother timing to start child animations
+            // requestAnimationFrame waits for the browser's next repaint, ensuring
+            // the parent's opacity transition has started.
+            requestAnimationFrame(() => {
+                setTimeout(() => { // Small delay for staggering individual elements
+                    document.querySelector('.status-title').classList.add('reveal');
+                    document.querySelectorAll('.status-card').forEach((card, index) => {
+                        card.style.transitionDelay = `${0.1 * index}s`;
+                        card.classList.add('reveal');
+                    });
+                    document.querySelector('.back-btn').classList.add('reveal');
+                }, 50); // Keep small delay for staggered effect
+            });
         }
 
         function showHome() {
@@ -796,9 +801,9 @@
             statusPage.classList.remove('active'); // This starts the opacity fade-out
 
             // Listen for the end of the opacity transition to set display: none
-            const onTransitionEnd = () => {
-                // Ensure the transition ended for the 'active' class removal, not some other transition
-                if (!statusPage.classList.contains('active')) { 
+            const onTransitionEnd = (event) => {
+                // Ensure the transition ended for the 'opacity' property, not some other transition
+                if (event.propertyName === 'opacity' && !statusPage.classList.contains('active')) { 
                     statusPage.style.display = 'none';
                     statusPage.removeEventListener('transitionend', onTransitionEnd); // Clean up listener
                 }
@@ -842,7 +847,9 @@
         // Intersection Observer for scroll animations (for features section on home)
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
+                // Only reveal if the parent section is not display: none
+                // The features-section should always be visible on home, so this is fine.
+                if (entry.isIntersecting && window.getComputedStyle(entry.target.closest('section')).display !== 'none') {
                     entry.target.classList.add('reveal');
                     if (entry.target.classList.contains('feature-card')) {
                          const index = Array.from(document.querySelectorAll('.feature-card')).indexOf(entry.target);
@@ -883,7 +890,6 @@
             }
 
             // Observe elements for the new features section (only when home is active)
-            // These will only be observed if they are display: block
             document.querySelectorAll('.section-title, .feature-card').forEach(element => {
                 observer.observe(element);
             });
