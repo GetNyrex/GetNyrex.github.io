@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyrex Executor</title>
-    <!-- Corrected favicon path to a placeholder for demonstration -->
+    <title>Nyrex Executor - Status</title>
     <link rel="icon" type="image/png" href="favicon.ico.png?v=1.0">
     <style>
-        /* GLOBAL STYLES - Consistent across both pages */
+        /* Same CSS as before */
         * {
             margin: 0;
             padding: 0;
@@ -17,7 +16,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
-            background-attachment: fixed; /* Ensures gradient covers full viewport */
+            background-attachment: fixed;
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
@@ -78,7 +77,6 @@
         .nav-links li:nth-child(2) { animation-delay: 0.4s; }
         .nav-links li:nth-child(3) { animation-delay: 0.5s; }
 
-
         .nav-links a {
             color: #ffffff;
             text-decoration: none;
@@ -93,13 +91,12 @@
             color: #00ffff;
         }
 
-        /* STATUS PAGE SPECIFIC STYLES */
         .status-page {
             min-height: 100vh;
             padding: 120px 0 80px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            opacity: 0; /* Starts transparent for page-wide fade-in */
-            animation: fadeInPage 0.8s ease-out forwards; /* Page-wide fade-in animation */
+            opacity: 0;
+            animation: fadeInPage 0.8s ease-out forwards;
         }
 
         .status-content {
@@ -113,10 +110,10 @@
             font-weight: 300;
             margin-bottom: 40px;
             color: #ffffff;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
-            animation-delay: 0.2s; /* Stagger animation after page fade-in */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.6s ease-out forwards;
+            animation-delay: 0.2s;
         }
 
         .status-title .highlight {
@@ -137,14 +134,13 @@
             padding: 30px;
             text-align: left;
             transition: all 0.3s ease, border-color 0.3s ease;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.6s ease-out forwards;
         }
-        /* Stagger the card animations after page fade-in */
+
         .status-card:nth-child(1) { animation-delay: 0.4s; }
         .status-card:nth-child(2) { animation-delay: 0.6s; }
-
 
         .status-card:hover {
             transform: translateY(-5px);
@@ -174,20 +170,15 @@
             background: #ff4444;
         }
 
-        /* COMMON ANIMATIONS - Consistent across both pages */
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
 
-        @keyframes fadeInPage { /* New animation for the entire page load */
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes fadeInTop {
@@ -251,10 +242,10 @@
             align-items: center;
             gap: 8px;
             margin-top: 40px;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
-            animation-delay: 0.8s; /* Stagger animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.6s ease-out forwards;
+            animation-delay: 0.8s;
         }
 
         .back-btn:hover {
@@ -267,7 +258,67 @@
             font-size: 16px;
         }
 
-        /* MEDIA QUERIES - Consistent across both pages */
+        .admin-controls {
+            margin-top: 30px;
+            display: none;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-operational {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .btn-warning {
+            background: #ffaa00;
+            color: #000;
+        }
+
+        .btn-down {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .btn-hide {
+            background: #666;
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        .update-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .update-indicator.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -286,7 +337,6 @@
             }
         }
 
-        /* SCROLL BEHAVIOR & SCROLLBAR - Consistent across both pages */
         html {
             scroll-behavior: smooth;
         }
@@ -310,21 +360,25 @@
     </style>
 </head>
 <body>
+    <div class="update-indicator" id="updateIndicator">
+        Status updated successfully!
+    </div>
+
     <header>
         <nav class="container">
             <div class="logo">
                 Nyrex<span class="highlight">.lol</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li> <!-- Link back to index.html -->
+                <li><a href="index.html">Home</a></li>
                 <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
-                <li><a href="status.html">Status</a></li> <!-- Link to itself -->
+                <li><a href="status.html">Status</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="status-page" id="status-section">
+        <section class="status-page">
             <div class="container">
                 <div class="status-content">
                     <h2 class="status-title">
@@ -348,34 +402,29 @@
                                 <div class="status-dot error" id="roblox-dot"></div>
                                 <div class="service-name">Nyrex For Roblox</div>
                             </div>
-                            <div class="service-status error" id="roblox-status">Service Down</div>
+                            <div class="service-status error" id="roblox-status">Loading...</div>
                             <div class="service-description" id="roblox-description">
-                                Nyrex For Roblox is currently down. Please wait for an update!
+                                Loading current status...
                             </div>
                         </div>
-                    </div>          
+                    </div>
 
-                    <!-- Admin Controls - Hidden by default -->
-                    <div class="admin-controls" id="adminControls" style="margin-top: 30px; display: none; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                        <button onclick="updateRobloxStatus('up', 'Nyrex For Roblox is now operational!')" 
-                                style="background: #00ff00; color: #000; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                    <div class="admin-controls" id="adminControls">
+                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusGlobal('up', 'Nyrex For Roblox is now operational!')">
                             Set Operational
                         </button>
-                        <button onclick="updateRobloxStatus('warning', 'Nyrex For Roblox is experiencing some issues.')" 
-                                style="background: #ffaa00; color: #000; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusGlobal('warning', 'Nyrex For Roblox is experiencing some issues.')">
                             Set Warning
                         </button>
-                        <button onclick="updateRobloxStatus('down', 'Nyrex For Roblox is currently down for maintenance.')" 
-                                style="background: #ff4444; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                        <button class="admin-btn btn-down" onclick="updateRobloxStatusGlobal('down', 'Nyrex For Roblox is currently down for maintenance.')">
                             Set Down
                         </button>
-                        <button onclick="hideAdminControls()" 
-                                style="background: #666; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-left: 20px;">
+                        <button class="admin-btn btn-hide" onclick="hideAdminControls()">
                             Hide Controls
                         </button>
                     </div>
 
-                    <a href="index.html" class="back-btn">Back to Home</a> <!-- Link back to index.html -->
+                    <a href="index.html" class="back-btn">Back to Home</a>
                 </div>
             </div>
         </section>
@@ -384,6 +433,9 @@
     <script>
         let statusCheckInterval;
 
+        // Check if we're running locally or on a server
+        const isLocal = window.location.protocol === 'file:';
+
         async function checkWebsiteStatus() {
             const websiteDot = document.getElementById('website-dot');
             const websiteStatus = document.getElementById('website-status');
@@ -391,7 +443,6 @@
             
             try {
                 const startTime = performance.now();
-                // Ping index.html or your main site URL to check status
                 const response = await fetch('index.html', { 
                     method: 'HEAD',
                     cache: 'no-cache'
@@ -418,8 +469,36 @@
             }
         }
 
-        // Function to update Roblox service status
-        function updateRobloxStatus(status = 'down', message = 'Nyrex For Roblox is currently down. Please wait for an update!') {
+        // Load status from JSON file or localStorage
+        async function loadRobloxStatus() {
+            try {
+                if (isLocal) {
+                    // For local testing, use localStorage
+                    const savedStatus = localStorage.getItem('nyrex-roblox-status');
+                    if (savedStatus) {
+                        const status = JSON.parse(savedStatus);
+                        updateRobloxStatusDisplay(status.status, status.message);
+                    } else {
+                        updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
+                    }
+                } else {
+                    // For server deployment, load from JSON file
+                    const response = await fetch('status.json', { cache: 'no-cache' });
+                    if (response.ok) {
+                        const status = await response.json();
+                        updateRobloxStatusDisplay(status.roblox.status, status.roblox.message);
+                    } else {
+                        updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
+                    }
+                }
+            } catch (error) {
+                console.log('Status file not found, using default status');
+                updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
+            }
+        }
+
+        // Update the display (used by both local and server methods)
+        function updateRobloxStatusDisplay(status, message) {
             const robloxDot = document.getElementById('roblox-dot');
             const robloxStatus = document.getElementById('roblox-status');
             const robloxDescription = document.getElementById('roblox-description');
@@ -446,46 +525,57 @@
             robloxDescription.textContent = message;
         }
 
-        function updateAllStatus() {
-            checkWebsiteStatus();
-            // You can call updateRobloxStatus() here if you want to check it programmatically
-        }
-
-        function startStatusMonitoring() {
-            updateAllStatus();
-            statusCheckInterval = setInterval(updateAllStatus, 30000);
-        }
-
-        function stopStatusMonitoring() {
-            if (statusCheckInterval) {
-                clearInterval(statusCheckInterval);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Start status monitoring when the status page loads
-            startStatusMonitoring();
-            
-            // Set initial Roblox status to down (you can change this)
-            updateRobloxStatus('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
-        });
-
-        // Header scroll effect (kept for consistency if status page itself becomes scrollable)
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(10, 10, 10, 0.98)';
-                header.style.padding = '15px 0';
+        // Update status globally (for admin use)
+        async function updateRobloxStatusGlobal(status, message) {
+            if (isLocal) {
+                // For local testing, save to localStorage
+                const statusData = {
+                    status: status,
+                    message: message,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('nyrex-roblox-status', JSON.stringify(statusData));
+                updateRobloxStatusDisplay(status, message);
+                showUpdateIndicator();
             } else {
-                header.style.background = 'rgba(10, 10, 10, 0.95)';
-                header.style.padding = '20px 0';
+                // For server deployment, you'd need to implement a server endpoint
+                try {
+                    const response = await fetch('update-status.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            service: 'roblox',
+                            status: status,
+                            message: message
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        updateRobloxStatusDisplay(status, message);
+                        showUpdateIndicator();
+                    } else {
+                        alert('Failed to update status on server');
+                    }
+                } catch (error) {
+                    alert('Error updating status: ' + error.message);
+                }
             }
-        });
+        }
+
+        function showUpdateIndicator() {
+            const indicator = document.getElementById('updateIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 3000);
+        }
 
         // Admin access functions
         function showAdminControls() {
             const password = prompt("Enter admin password:");
-            if (password === "nyrex2024") { // Change this to your desired password
+            if (password === "nyrex2024") {
                 document.getElementById('adminControls').style.display = 'flex';
             } else if (password !== null) {
                 alert("Incorrect password!");
@@ -496,17 +586,38 @@
             document.getElementById('adminControls').style.display = 'none';
         }
 
-        // Admin keyboard shortcut - Press Ctrl+Shift+A to show admin controls
+        // Auto-refresh status every 30 seconds
+        function startStatusMonitoring() {
+            checkWebsiteStatus();
+            loadRobloxStatus();
+            statusCheckInterval = setInterval(() => {
+                checkWebsiteStatus();
+                loadRobloxStatus();
+            }, 30000);
+        }
+
+        // Admin keyboard shortcut
         document.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.shiftKey && event.key === 'A') {
                 showAdminControls();
             }
         });
 
-        // Example: You can call this function to change the status
-        // updateRobloxStatus('up', 'Nyrex For Roblox is now operational!');
-        // updateRobloxStatus('warning', 'Nyrex For Roblox is experiencing some issues.');
-        // updateRobloxStatus('down', 'Nyrex For Roblox is currently down for maintenance.');
+        document.addEventListener('DOMContentLoaded', () => {
+            startStatusMonitoring();
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+                header.style.padding = '15px 0';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.padding = '20px 0';
+            }
+        });
     </script>
 </body>
 </html>
