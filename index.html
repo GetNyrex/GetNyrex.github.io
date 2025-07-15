@@ -14,9 +14,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Changed body background to a continuous, fixed gradient */
             background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
-            background-attachment: fixed; /* Ensures gradient covers full viewport even with short content */
+            background-attachment: fixed;
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
@@ -264,9 +263,8 @@
             transform: translateY(0);
         }
 
-        /* New highlight color changed to Nyrex cyan */
         .feature-highlight {
-            color: #00ffff; /* Changed from #FF0080 to #00ffff */
+            color: #00ffff;
         }
 
         .feature-cards {
@@ -303,12 +301,12 @@
 
         .feature-card:hover {
             transform: translateY(-5px);
-            border-color: #00ffff; /* Changed from #FF0080 to #00ffff */
+            border-color: #00ffff;
         }
 
         .feature-icon {
             margin-bottom: 20px;
-            color: #00ffff; /* Changed from #FF0080 to #00ffff */
+            color: #00ffff;
         }
 
         .feature-icon svg {
@@ -335,7 +333,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #00ffff; /* Changed from #FF0080 to #00ffff */
+            color: #00ffff;
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
@@ -353,13 +351,12 @@
             min-height: 100vh;
             padding: 120px 0 80px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            display: none;
+            display: none; /* Keep display none initially */
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
 
         .status-page.active {
-            display: block;
             opacity: 1;
         }
 
@@ -763,32 +760,61 @@
         function showStatus() {
             document.querySelector('.hero').style.display = 'none';
             const statusPage = document.querySelector('.status-page');
-            statusPage.classList.add('active');
-            window.scrollTo(0, 0);
-            startStatusMonitoring();
 
-            setTimeout(() => {
-                document.querySelector('.status-title').classList.add('reveal');
-                document.querySelectorAll('.status-card').forEach((card, index) => {
-                    card.style.transitionDelay = `${0.1 * index}s`;
-                    card.classList.add('reveal');
-                });
-                document.querySelector('.back-btn').classList.add('reveal');
-            }, 50); 
-        }
-
-        function showHome() {
-            const statusPage = document.querySelector('.status-page');
-            statusPage.classList.remove('active');
-            document.querySelector('.hero').style.display = 'flex';
-            window.scrollTo(0, 0);
-            stopStatusMonitoring();
-
+            // 1. Ensure animation classes are removed before displaying
             document.querySelector('.status-title').classList.remove('reveal');
             document.querySelectorAll('.status-card').forEach(card => {
                 card.classList.remove('reveal');
             });
             document.querySelector('.back-btn').classList.remove('reveal');
+
+            // 2. Set display to block first, but it's still transparent (opacity: 0)
+            statusPage.style.display = 'block'; 
+
+            // 3. Force a reflow/repaint to ensure browser acknowledges display change before opacity
+            void statusPage.offsetHeight; 
+
+            // 4. Now add 'active' to trigger the parent's fade-in
+            statusPage.classList.add('active'); 
+
+            window.scrollTo(0, 0);
+            startStatusMonitoring();
+
+            // 5. After a short delay, add 'reveal' to children for staggered animation
+            setTimeout(() => {
+                document.querySelector('.status-title').classList.add('reveal');
+                document.querySelectorAll('.status-card').forEach((card, index) => {
+                    card.style.transitionDelay = `${0.1 * index}s`; // Staggered delay
+                    card.classList.add('reveal');
+                });
+                document.querySelector('.back-btn').classList.add('reveal');
+            }, 50); // Small delay to allow initial render
+        }
+
+        function showHome() {
+            const statusPage = document.querySelector('.status-page');
+            statusPage.classList.remove('active'); // This starts the opacity fade-out
+
+            // Listen for the end of the opacity transition to set display: none
+            const onTransitionEnd = () => {
+                // Ensure the transition ended for the 'active' class removal, not some other transition
+                if (!statusPage.classList.contains('active')) { 
+                    statusPage.style.display = 'none';
+                    statusPage.removeEventListener('transitionend', onTransitionEnd); // Clean up listener
+                }
+            };
+            statusPage.addEventListener('transitionend', onTransitionEnd);
+
+            // Immediately remove reveal classes so they're reset for next time
+            document.querySelector('.status-title').classList.remove('reveal');
+            document.querySelectorAll('.status-card').forEach(card => {
+                card.classList.remove('reveal');
+            });
+            document.querySelector('.back-btn').classList.remove('reveal');
+
+            document.querySelector('.hero').style.display = 'flex';
+            window.scrollTo(0, 0);
+            stopStatusMonitoring();
         }
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -813,12 +839,11 @@
             });
         });
 
-        // Intersection Observer for scroll animations
+        // Intersection Observer for scroll animations (for features section on home)
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('reveal');
-                    // Add staggered delay for feature cards specifically
                     if (entry.target.classList.contains('feature-card')) {
                          const index = Array.from(document.querySelectorAll('.feature-card')).indexOf(entry.target);
                          entry.target.style.transitionDelay = `${0.1 * index}s`;
@@ -842,20 +867,23 @@
             }
 
             const hero = document.querySelector('.hero');
-            if (hero.style.display !== 'none') {
+            // Only apply parallax if hero is visible (display: flex)
+            if (window.getComputedStyle(hero).display !== 'none') {
                 const scrolled = window.pageYOffset;
                 hero.style.transform = `translateY(${scrolled * 0.5}px)`;
             }
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Check initial hash to decide which section to show on load
             if (window.location.hash === '#status') {
                 showStatus();
             } else {
-                showHome();
+                showHome(); // Ensure home is shown by default and status is hidden
             }
 
-            // Observe elements for the new features section
+            // Observe elements for the new features section (only when home is active)
+            // These will only be observed if they are display: block
             document.querySelectorAll('.section-title, .feature-card').forEach(element => {
                 observer.observe(element);
             });
