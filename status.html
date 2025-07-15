@@ -361,7 +361,7 @@
 </head>
 <body>
     <div class="update-indicator" id="updateIndicator">
-        Status updated successfully!
+        Status updated successfully locally! (Not global)
     </div>
 
     <header>
@@ -410,14 +410,14 @@
                     </div>
 
                     <div class="admin-controls" id="adminControls">
-                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusGlobal('up', 'Nyrex For Roblox is now operational!')">
-                            Set Operational
+                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusLocal('up', 'Nyrex For Roblox is now operational!')">
+                            Set Operational (Local)
                         </button>
-                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusGlobal('warning', 'Nyrex For Roblox is experiencing some issues.')">
-                            Set Warning
+                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusLocal('warning', 'Nyrex For Roblox is experiencing some issues.')">
+                            Set Warning (Local)
                         </button>
-                        <button class="admin-btn btn-down" onclick="updateRobloxStatusGlobal('down', 'Nyrex For Roblox is currently down for maintenance.')">
-                            Set Down
+                        <button class="admin-btn btn-down" onclick="updateRobloxStatusLocal('down', 'Nyrex For Roblox is currently down for maintenance.')">
+                            Set Down (Local)
                         </button>
                         <button class="admin-btn btn-hide" onclick="hideAdminControls()">
                             Hide Controls
@@ -433,8 +433,8 @@
     <script>
         let statusCheckInterval;
 
-        // Check if we're running locally or on a server
-        const isLocal = window.location.protocol === 'file:';
+        // Check for 'local' is not needed anymore as the admin buttons are explicitly local-only now.
+        // The main status will always load from status.json
 
         async function checkWebsiteStatus() {
             const websiteDot = document.getElementById('website-dot');
@@ -469,31 +469,22 @@
             }
         }
 
-        // Load status from JSON file or localStorage
+        // Load status from status.json
+        // This will always fetch from the live status.json file on GitHub Pages
         async function loadRobloxStatus() {
             try {
-                if (isLocal) {
-                    // For local testing, use localStorage
-                    const savedStatus = localStorage.getItem('nyrex-roblox-status');
-                    if (savedStatus) {
-                        const status = JSON.parse(savedStatus);
-                        updateRobloxStatusDisplay(status.status, status.message);
-                    } else {
-                        updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
-                    }
+                const response = await fetch('status.json', { cache: 'no-cache' });
+                if (response.ok) {
+                    const status = await response.json();
+                    updateRobloxStatusDisplay(status.roblox.status, status.roblox.message);
                 } else {
-                    // For server deployment, load from JSON file
-                    const response = await fetch('status.json', { cache: 'no-cache' });
-                    if (response.ok) {
-                        const status = await response.json();
-                        updateRobloxStatusDisplay(status.roblox.status, status.roblox.message);
-                    } else {
-                        updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
-                    }
+                    // Fallback if status.json is not found or has issues
+                    updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
                 }
             } catch (error) {
-                console.log('Status file not found, using default status');
-                updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
+                console.error('Error fetching status.json:', error);
+                // Fallback in case of network error or malformed JSON
+                updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Could not load status information.');
             }
         }
 
@@ -525,43 +516,13 @@
             robloxDescription.textContent = message;
         }
 
-        // Update status globally (for admin use)
-        async function updateRobloxStatusGlobal(status, message) {
-            if (isLocal) {
-                // For local testing, save to localStorage
-                const statusData = {
-                    status: status,
-                    message: message,
-                    timestamp: new Date().toISOString()
-                };
-                localStorage.setItem('nyrex-roblox-status', JSON.stringify(statusData));
-                updateRobloxStatusDisplay(status, message);
-                showUpdateIndicator();
-            } else {
-                // For server deployment, you'd need to implement a server endpoint
-                try {
-                    const response = await fetch('update-status.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            service: 'roblox',
-                            status: status,
-                            message: message
-                        })
-                    });
-                    
-                    if (response.ok) {
-                        updateRobloxStatusDisplay(status, message);
-                        showUpdateIndicator();
-                    } else {
-                        alert('Failed to update status on server');
-                    }
-                } catch (error) {
-                    alert('Error updating status: ' + error.message);
-                }
-            }
+        // This function now *only* updates the status in the current browser session.
+        // It does NOT interact with any server-side script.
+        function updateRobloxStatusLocal(status, message) {
+            updateRobloxStatusDisplay(status, message);
+            showUpdateIndicator();
+            // Important: This change is ONLY visible to the person who clicked the button.
+            // To make it global, you need to manually edit status.json on GitHub.
         }
 
         function showUpdateIndicator() {
@@ -588,12 +549,12 @@
 
         // Auto-refresh status every 30 seconds
         function startStatusMonitoring() {
-            checkWebsiteStatus();
-            loadRobloxStatus();
+            checkWebsiteStatus(); // Checks your index.html response time
+            loadRobloxStatus();   // Loads Roblox status from status.json
             statusCheckInterval = setInterval(() => {
                 checkWebsiteStatus();
                 loadRobloxStatus();
-            }, 30000);
+            }, 30000); // Refreshes every 30 seconds
         }
 
         // Admin keyboard shortcut
