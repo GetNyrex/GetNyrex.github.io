@@ -1,12 +1,7 @@
 {
   "roblox": {
     "status": "down",
-    "message": "Nyrex For Roblox is currently down. Please wait for an update!",
-    "timestamp": "2024-01-01T12:00:00Z"
-  },
-  "website": {
-    "status": "up",
-    "message": "All systems operational",
-    "timestamp": "2024-01-01T12:00:00Z"
+    "message": "Nyrex For Roblox is currently down for maintenance.",
+    "timestamp": "2025-07-15T22:30:00.000Z"
   }
 }
