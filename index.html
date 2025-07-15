@@ -14,7 +14,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
+            /* Changed body background to a continuous, fixed gradient */
+            background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
+            background-attachment: fixed; /* Ensures gradient covers full viewport even with short content */
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
@@ -252,8 +254,8 @@
             font-weight: 300;
             margin-bottom: 60px;
             color: #ffffff;
-            opacity: 0; /* Initial state for animation */
-            transform: translateY(20px); /* Initial state for animation */
+            opacity: 0;
+            transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
 
@@ -262,8 +264,9 @@
             transform: translateY(0);
         }
 
+        /* New highlight color changed to Nyrex cyan */
         .feature-highlight {
-            color: #FF0080; /* Vibrant pink/magenta for feature titles */
+            color: #00ffff; /* Changed from #FF0080 to #00ffff */
         }
 
         .feature-cards {
@@ -274,12 +277,11 @@
 
         @media (min-width: 992px) {
             .feature-cards {
-                /* On larger screens, make the layout 2 columns on top, 1 full-width on bottom */
                 grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: auto auto;
             }
             .feature-card.large-card {
-                grid-column: span 2; /* The Discord card spans two columns */
+                grid-column: span 2;
             }
         }
 
@@ -289,9 +291,9 @@
             border-radius: 12px;
             padding: 40px;
             text-align: left;
-            transition: all 0.6s ease-out; /* Smoother reveal transition */
-            opacity: 0; /* Initial state for animation */
-            transform: translateY(20px); /* Initial state for animation */
+            transition: all 0.6s ease-out;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .feature-card.reveal {
@@ -301,18 +303,18 @@
 
         .feature-card:hover {
             transform: translateY(-5px);
-            border-color: #FF0080; /* Highlight on hover */
+            border-color: #00ffff; /* Changed from #FF0080 to #00ffff */
         }
 
         .feature-icon {
             margin-bottom: 20px;
-            color: #FF0080; /* Icon color */
+            color: #00ffff; /* Changed from #FF0080 to #00ffff */
         }
 
         .feature-icon svg {
-            width: 48px; /* Larger icons */
+            width: 48px;
             height: 48px;
-            stroke-width: 1.5; /* Thicker strokes for line icons */
+            stroke-width: 1.5;
         }
 
         .feature-title {
@@ -333,7 +335,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: #FF0080;
+            color: #00ffff; /* Changed from #FF0080 to #00ffff */
             text-decoration: none;
             font-weight: 500;
             font-size: 16px;
@@ -569,7 +571,7 @@
             }
 
             .feature-card.large-card {
-                grid-column: span 1; /* Reset for mobile */
+                grid-column: span 1;
             }
 
             .status-card, .feature-card {
@@ -739,7 +741,6 @@
             } catch (error) {
                 websiteDot.className = 'status-dot error';
                 websiteStatus.className = 'service-status error';
-                websiteStatus.textContent = 'Service Down';
                 websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
             }
         }
