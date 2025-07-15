@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyrex Executor</title>
+    <title>Nyrex.lol</title>
     <!-- Corrected favicon path to a placeholder for demonstration -->
     <link rel="icon" type="image/x-icon" href="https://placehold.co/32x32/00ffff/000000?text=NY">
     <style>
@@ -93,101 +93,265 @@
             color: #00ffff;
         }
 
-        /* STATUS PAGE SPECIFIC STYLES */
-        .status-page {
-            min-height: 100vh;
-            padding: 120px 0 80px;
+        /* HERO SECTION STYLES */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            opacity: 0; /* Starts transparent for page-wide fade-in */
-            animation: fadeInPage 0.8s ease-out forwards; /* Page-wide fade-in animation */
+            overflow: hidden;
         }
 
-        .status-content {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: gradientPulse 10s infinite alternate;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .hero-content {
             max-width: 800px;
             margin: 0 auto;
-            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
-        .status-title {
-            font-size: 3rem;
+        .brand-logo {
+            margin-bottom: 40px;
+        }
+
+        .brand-circles {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .circle {
+            width: 60px;
+            height: 60px;
+            background: #00ffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .main-title {
+            font-size: 4rem;
             font-weight: 300;
             margin-bottom: 40px;
-            color: #ffffff;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
-            animation-delay: 0.2s; /* Stagger animation after page fade-in */
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.8s ease-out forwards;
+            animation-delay: 0.6s;
         }
 
-        .status-title .highlight {
+        .main-title .highlight {
             color: #00ffff;
         }
 
-        .status-cards {
+        .hero-description {
+            font-size: 18px;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.8s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .download-btn {
+            background: #00ffff;
+            color: #000000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.8s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .download-btn:hover {
+            background: #00e6e6;
+            transform: translateY(-2px);
+        }
+
+        .download-btn::before {
+            content: '→';
+            font-size: 18px;
+        }
+
+        .discord-btn {
+            background: transparent;
+            color: #ffffff;
+            padding: 15px 30px;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.8s ease-out forwards;
+            animation-delay: 1.1s;
+        }
+
+        .discord-btn:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        .discord-btn::before {
+            content: '💬';
+            font-size: 18px;
+        }
+
+        /* FEATURES SECTION STYLES */
+        .features-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-highlight {
+            color: #00ffff; /* Nyrex cyan theme color */
+        }
+
+        .feature-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 50px;
         }
 
-        .status-card {
+        @media (min-width: 992px) {
+            .feature-cards {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto auto;
+            }
+            .feature-card.large-card {
+                grid-column: span 2;
+            }
+        }
+
+        .feature-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 30px;
+            padding: 40px;
             text-align: left;
-            transition: all 0.3s ease, border-color 0.3s ease;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
+            transition: all 0.6s ease-out;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        /* Stagger the card animations after page fade-in */
-        .status-card:nth-child(1) { animation-delay: 0.4s; }
-        .status-card:nth-child(2) { animation-delay: 0.6s; }
 
+        .feature-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        .status-card:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
             border-color: #00ffff;
         }
 
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .feature-icon {
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        .feature-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke-width: 1.5;
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
             margin-bottom: 15px;
+            color: #ffffff;
         }
 
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #00ff00;
-            animation: pulse 2s infinite;
+        .feature-description {
+            font-size: 16px;
+            color: #cccccc;
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
 
-        .status-dot.warning {
-            background: #ffaa00;
+        .feature-discord-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
-        .status-dot.error {
-            background: #ff4444;
+        .feature-discord-link:hover {
+            color: #ffffff;
+            transform: translateX(5px);
         }
 
         /* COMMON ANIMATIONS - Consistent across both pages */
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes fadeInPage { /* New animation for the entire page load */
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        @keyframes gradientPulse {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
         }
 
         @keyframes fadeInTop {
@@ -212,77 +376,51 @@
             }
         }
 
-        .service-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .service-status {
-            font-size: 14px;
-            color: #00ff00;
-            margin-bottom: 10px;
-        }
-
-        .service-status.warning {
-            color: #ffaa00;
-        }
-
-        .service-status.error {
-            color: #ff4444;
-        }
-
-        .service-description {
-            font-size: 14px;
-            color: #cccccc;
-            line-height: 1.5;
-        }
-
-        .back-btn {
-            background: #00ffff;
-            color: #000000;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 40px;
-            opacity: 0; /* Initial state for reveal animation */
-            transform: translateY(20px); /* Initial state for reveal animation */
-            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
-            animation-delay: 0.8s; /* Stagger animation */
-        }
-
-        .back-btn:hover {
-            background: #00e6e6;
-            transform: translateY(-2px);
-        }
-
-        .back-btn::before {
-            content: '←';
-            font-size: 16px;
-        }
-
         /* MEDIA QUERIES - Consistent across both pages */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
-            .status-title {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
                 font-size: 2rem;
             }
-            
-            .status-cards {
+
+            .hero-description {
+                font-size: 16px;
+                padding: 0 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .download-btn, .discord-btn {
+                width: 200px;
+                justify-content: center;
+            }
+
+            .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .feature-cards {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
 
-            .status-card {
+            .feature-card.large-card {
+                grid-column: span 1;
+            }
+
+            .feature-card {
                 padding: 20px;
             }
         }
@@ -317,110 +455,95 @@
                 Nyrex<span class="highlight">.lol</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li> <!-- Link back to index.html -->
+                <li><a href="#home">Home</a></li>
                 <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
-                <li><a href="status.html">Status</a></li> <!-- Link to itself -->
+                <li><a href="status.html">Status</a></li> <!-- Link to the new status.html -->
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="status-page" id="status-section">
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 class="main-title">
+                    Nyrex<span class="highlight">.lol</span>
+                </h1>
+                
+                <p class="hero-description">
+            Nyrex is the new executor built just for you.
+            Blazing fast, rock-solid security, and a sleek experience — all in one package.
+            We're not just keeping up — we're setting the standard.
+            Our team is dedicated to keeping Nyrex running smoothly, so you can execute with confidence.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="https://www.dropbox.com/scl/fi/qx4rz6r8j8xibvteez1wq/nyrexpatch.rar?rlkey=66lh0d8rudkqbga0sq79rol4q&st=2n315fsf&dl=1" class="download-btn" target="_blank">Download</a>
+                    <a href="https://discord.gg/DSNxC6VJ4U" class="discord-btn" target="_blank">Discord</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
             <div class="container">
-                <div class="status-content">
-                    <h2 class="status-title">
-                        System <span class="highlight">Status</span>
-                    </h2>
-                    
-                    <div class="status-cards">
-                        <div class="status-card">
-                            <div class="status-indicator">
-                                <div class="status-dot" id="website-dot"></div>
-                                <div class="service-name">Main Website</div>
-                            </div>
-                            <div class="service-status" id="website-status">Checking...</div>
-                            <div class="service-description" id="website-description">
-                                Testing connection and measuring response time...
-                            </div>
+                <h2 class="section-title">Why Choose <span class="highlight">Nyrex?</span></h2>
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <!-- Shield Icon (from Feather Icons) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                         </div>
-
-                        <div class="status-card">
-                            <div class="status-indicator">
-                                <div class="status-dot"></div>
-                                <div class="service-name">Nyrex For Roblox</div>
-                            </div>
-                            <div class="service-status">Operational</div>
-                            <div class="service-description">
-                                All Roblox services are responding normally. No issues detected.
-                            </div>
+                        <h3 class="feature-title">Best <span class="feature-highlight">Security</span></h3>
+                        <p class="feature-description">
+                            Updates are released frequently to ensure Nyrex is safe to use. We also have a dedicated team that monitors security 24/7, 365 days a year.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <!-- Headphones Icon (from Feather Icons) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
                         </div>
-                    </div>          
-
-                    <a href="index.html" class="back-btn">Back to Home</a> <!-- Link back to index.html -->
+                        <h3 class="feature-title">Amazing <span class="feature-highlight">Support</span></h3>
+                        <p class="feature-description">
+                            We do our best to respond to every ticket shortly after they are opened. Our support team is quick and capable to answer/fix all of your concerns.
+                        </p>
+                    </div>
+                    <div class="feature-card large-card">
+                        <div class="feature-icon">
+                            <!-- Discord Icon (simplified SVG) -->
+                            <svg viewBox="0 0 245 240" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path d="M104.4 103.9c-5.7 0-10.2 4.6-10.2 10.2s4.6 10.2 10.2 10.2c5.7 0 10.2-4.6 10.2-10.2s-4.5-10.2-10.2-10.2zm64.9-31.5c-15.7-5.5-35.7-1.1-47.5 7.8-11.9-8.9-31.9-13.4-47.5-7.8-19.4-6.7-39.7-0.7-48.6 18.1-17.6 37.5-30.7 75.9-36.9 113.8 6.6 5.4 12.1 10 17.1 14.2 11.6 9.8 20.3 17.2 29.5 24.3 11.4 8.7 20.5 15.6 28.6 21.9 3.5 2.8 7.1 5.3 10.6 7.5l.3.2c5.9 3.8 11.2 6.5 16.2 8.5 7.6 3 14.8 5.4 20.7 7.2 7.7 2.3 12.3 3.4 15.4 3.4 3 0 7.6-1.1 15.4-3.4 5.9-1.8 13.1-4.2 20.7-7.2 5-2 10.3-4.7 16.2-8.5l.3-.2c3.5-2.2 7.1-4.7 10.6-7.5 8.1-6.3 17.2-13.2 28.6-21.9 9.2-7.1 17.9-14.5 29.5-24.3 5-4.2 10.5-8.8 17.1-14.2-6.3-37.9-19.3-76.3-36.9-113.8-8.9-18.8-29.2-24.8-48.6-18.1zM73.4 179.6c-9.9 0-17.9-8-17.9-17.9s8-17.9 17.9-17.9 17.9 8 17.9 17.9-8 17.9-17.9 17.9zm98.2 0c-9.9 0-17.9-8-17.9-17.9s8-17.9 17.9-17.9 17.9 8 17.9 17.9-8 17.9-17.9 17.9z"/></svg>
+                        </div>
+                        <h3 class="feature-title">Public <span class="feature-highlight">Discord</span></h3>
+                        <p class="feature-description">
+                            We host giveaways, events, and more in our public discord. Join now to get the latest updates and news. We also have a private discord for our customers.
+                        </p>
+                        <a href="https://discord.gg/DSNxC6VJ4U" target="_blank" class="feature-discord-link">
+                            Join our Discord →
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        let statusCheckInterval;
-
-        async function checkWebsiteStatus() {
-            const websiteDot = document.getElementById('website-dot');
-            const websiteStatus = document.getElementById('website-status');
-            const websiteDescription = document.getElementById('website-description');
-            
-            try {
-                const startTime = performance.now();
-                // Ping index.html or your main site URL to check status
-                const response = await fetch('index.html', { 
-                    method: 'HEAD',
-                    cache: 'no-cache'
-                });
-                const endTime = performance.now();
-                const responseTime = Math.round(endTime - startTime);
-                
-                if (response.ok) {
-                    websiteDot.className = 'status-dot';
-                    websiteStatus.className = 'service-status';
-                    websiteStatus.textContent = 'Operational';
-                    websiteDescription.textContent = `All systems are running normally. Response time: ${responseTime}ms`;
-                } else {
-                    websiteDot.className = 'status-dot warning';
-                    websiteStatus.className = 'service-status warning';
-                    websiteStatus.textContent = 'Partial Issues';
-                    websiteDescription.textContent = `Server responding with issues. Response time: ${responseTime}ms`;
+        // Intersection Observer for scroll animations (for features section)
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                    if (entry.target.classList.contains('feature-card')) {
+                         const index = Array.from(document.querySelectorAll('.feature-card')).indexOf(entry.target);
+                         entry.target.style.transitionDelay = `${0.1 * index}s`;
+                    }
+                    observer.unobserve(entry.target);
                 }
-            } catch (error) {
-                websiteDot.className = 'status-dot error';
-                websiteStatus.className = 'service-status error';
-                websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
-            }
-        }
-
-        function updateAllStatus() {
-            checkWebsiteStatus();
-        }
-
-        function startStatusMonitoring() {
-            updateAllStatus();
-            statusCheckInterval = setInterval(updateAllStatus, 30000);
-        }
-
-        function stopStatusMonitoring() {
-            if (statusCheckInterval) {
-                clearInterval(statusCheckInterval);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Start status monitoring when the status page loads
-            startStatusMonitoring();
-            // The page-wide fade-in animation is handled by CSS on .status-page itself
-            // Individual elements will also animate in due to their own animation properties
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px'
         });
 
-        // Header scroll effect (kept for consistency if status page itself becomes scrollable)
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
@@ -430,6 +553,18 @@
                 header.style.background = 'rgba(10, 10, 10, 0.95)';
                 header.style.padding = '20px 0';
             }
+
+            const hero = document.querySelector('.hero');
+            // Parallax effect for the hero section
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe elements for the features section on page load
+            document.querySelectorAll('.section-title, .feature-card').forEach(element => {
+                observer.observe(element);
+            });
         });
     </script>
 </body>
