@@ -35,6 +35,7 @@
             z-index: 1000;
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease-in-out, padding 0.3s ease-in-out; /* Added transition */
         }
 
         nav {
@@ -47,6 +48,10 @@
             font-size: 24px;
             font-weight: 600;
             color: #ffffff;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(-20px); /* Initial state for animation */
+            animation: fadeInTop 0.8s ease-out forwards; /* Animation for logo */
+            animation-delay: 0.2s;
         }
 
         .logo .highlight {
@@ -59,6 +64,17 @@
             gap: 40px;
             align-items: center;
         }
+
+        .nav-links li {
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(-20px); /* Initial state for animation */
+            animation: fadeInTop 0.8s ease-out forwards; /* Animation for nav links */
+        }
+
+        .nav-links li:nth-child(1) { animation-delay: 0.3s; }
+        .nav-links li:nth-child(2) { animation-delay: 0.4s; }
+        .nav-links li:nth-child(3) { animation-delay: 0.5s; }
+
 
         .nav-links a {
             color: #ffffff;
@@ -82,11 +98,28 @@
             text-align: center;
             position: relative;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            overflow: hidden; /* To contain the background animation */
+        }
+
+        /* Subtle pulsating background gradient */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            animation: gradientPulse 10s infinite alternate;
+            opacity: 0.5;
+            z-index: 0;
         }
 
         .hero-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative; /* Ensure content is above the pseudo-element */
+            z-index: 1;
         }
 
         .brand-logo {
@@ -118,6 +151,10 @@
             font-weight: 300;
             margin-bottom: 40px;
             letter-spacing: 2px;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            animation: fadeInBottom 0.8s ease-out forwards; /* Animation for title */
+            animation-delay: 0.6s;
         }
 
         .main-title .highlight {
@@ -133,6 +170,10 @@
             margin-left: auto;
             margin-right: auto;
             font-weight: 300;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            animation: fadeInBottom 0.8s ease-out forwards; /* Animation for description */
+            animation-delay: 0.8s;
         }
 
         .cta-buttons {
@@ -154,6 +195,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            animation: fadeInBottom 0.8s ease-out forwards; /* Animation for button */
+            animation-delay: 1s;
         }
 
         .download-btn:hover {
@@ -179,6 +224,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            animation: fadeInBottom 0.8s ease-out forwards; /* Animation for button */
+            animation-delay: 1.1s;
         }
 
         .discord-btn:hover {
@@ -197,10 +246,13 @@
             padding: 120px 0 80px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             display: none;
+            opacity: 0; /* Initial state for fade-in */
+            transition: opacity 0.5s ease-in-out;
         }
 
         .status-page.active {
             display: block;
+            opacity: 1; /* Fade in */
         }
 
         .status-content {
@@ -214,6 +266,14 @@
             font-weight: 300;
             margin-bottom: 40px;
             color: #ffffff;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transition for reveal */
+        }
+
+        .status-title.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .status-title .highlight {
@@ -233,7 +293,14 @@
             border-radius: 12px;
             padding: 30px;
             text-align: left;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, border-color 0.3s ease;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+        }
+
+        .status-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .status-card:hover {
@@ -268,6 +335,33 @@
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
+        }
+
+        @keyframes gradientPulse {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes fadeInTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInBottom {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .service-name {
@@ -309,6 +403,14 @@
             align-items: center;
             gap: 8px;
             margin-top: 40px;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transition for reveal */
+        }
+
+        .back-btn.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .back-btn:hover {
@@ -409,7 +511,7 @@
                 </h1>
                 
                 <p class="hero-description">
-             Nyrex is the new executor built just for you.
+            Nyrex is the new executor built just for you.
             Blazing fast, rock-solid security, and a sleek experience — all in one package.
             We're not just keeping up — we're setting the standard.
             Our team is dedicated to keeping Nyrex running smoothly, so you can execute with confidence.
@@ -451,7 +553,7 @@
                                 All Roblox services are responding normally. No issues detected.
                             </div>
                         </div>
-                    </div>         
+                    </div>          
 
                     <a href="#home" class="back-btn" onclick="showHome()">Back to Home</a>
                 </div>
@@ -502,29 +604,37 @@
             checkWebsiteStatus();
         }
 
-        function startStatusMonitoring() {
-            updateAllStatus();
-            statusCheckInterval = setInterval(updateAllStatus, 30000);
-        }
-
-        function stopStatusMonitoring() {
-            if (statusCheckInterval) {
-                clearInterval(statusCheckInterval);
-            }
-        }
-
         function showStatus() {
             document.querySelector('.hero').style.display = 'none';
-            document.querySelector('.status-page').classList.add('active');
+            const statusPage = document.querySelector('.status-page');
+            statusPage.classList.add('active');
             window.scrollTo(0, 0);
             startStatusMonitoring();
+
+            // Reveal animations for status page elements
+            setTimeout(() => {
+                document.querySelector('.status-title').classList.add('reveal');
+                document.querySelectorAll('.status-card').forEach((card, index) => {
+                    card.style.transitionDelay = `${0.1 * index}s`; // Stagger delay
+                    card.classList.add('reveal');
+                });
+                document.querySelector('.back-btn').classList.add('reveal');
+            }, 50); // Small delay to ensure display: block is applied
         }
 
         function showHome() {
-            document.querySelector('.status-page').classList.remove('active');
+            const statusPage = document.querySelector('.status-page');
+            statusPage.classList.remove('active');
             document.querySelector('.hero').style.display = 'flex';
             window.scrollTo(0, 0);
             stopStatusMonitoring();
+
+            // Remove reveal classes when going back to home
+            document.querySelector('.status-title').classList.remove('reveal');
+            document.querySelectorAll('.status-card').forEach(card => {
+                card.classList.remove('reveal');
+            });
+            document.querySelector('.back-btn').classList.remove('reveal');
         }
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -533,6 +643,7 @@
                 
                 if (href === '#status') {
                     e.preventDefault();
+                    showStatus(); // Call showStatus function when status link is clicked
                     return;
                 }
                 
@@ -556,8 +667,10 @@
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
                 header.style.background = 'rgba(10, 10, 10, 0.98)';
+                header.style.padding = '15px 0'; /* Slightly shrink header */
             } else {
                 header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.padding = '20px 0'; /* Restore header padding */
             }
         });
 
@@ -566,6 +679,16 @@
             if (hero.style.display !== 'none') {
                 const scrolled = window.pageYOffset;
                 hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Initialize status monitoring when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if the current URL has the #status hash on load
+            if (window.location.hash === '#status') {
+                showStatus();
+            } else {
+                showHome(); // Ensure home section is visible by default
             }
         });
     </script>
