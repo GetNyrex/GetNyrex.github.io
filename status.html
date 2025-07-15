@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyrex.lol - System Status</title>
+    <link rel="icon" type="image/x-icon" href="/nyrexlogo.ico">
+    <style>
+        /* GLOBAL STYLES - Consistent across both pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
+            background-attachment: fixed; /* Ensures gradient covers full viewport */
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInTop 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        .logo .highlight {
+            color: #00ffff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links li {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInTop 0.8s ease-out forwards;
+        }
+
+        .nav-links li:nth-child(1) { animation-delay: 0.3s; }
+        .nav-links li:nth-child(2) { animation-delay: 0.4s; }
+        .nav-links li:nth-child(3) { animation-delay: 0.5s; }
+
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: #00ffff;
+        }
+
+        /* STATUS PAGE SPECIFIC STYLES */
+        .status-page {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            opacity: 0; /* Starts transparent for page-wide fade-in */
+            animation: fadeInPage 0.8s ease-out forwards; /* Page-wide fade-in animation */
+        }
+
+        .status-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .status-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ffffff;
+            opacity: 0; /* Initial state for reveal animation */
+            transform: translateY(20px); /* Initial state for reveal animation */
+            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
+            animation-delay: 0.2s; /* Stagger animation after page fade-in */
+        }
+
+        .status-title .highlight {
+            color: #00ffff;
+        }
+
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            transition: all 0.3s ease, border-color 0.3s ease;
+            opacity: 0; /* Initial state for reveal animation */
+            transform: translateY(20px); /* Initial state for reveal animation */
+            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
+        }
+        /* Stagger the card animations after page fade-in */
+        .status-card:nth-child(1) { animation-delay: 0.4s; }
+        .status-card:nth-child(2) { animation-delay: 0.6s; }
+
+
+        .status-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.warning {
+            background: #ffaa00;
+        }
+
+        .status-dot.error {
+            background: #ff4444;
+        }
+
+        /* COMMON ANIMATIONS - Consistent across both pages */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInPage { /* New animation for the entire page load */
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInBottom {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .service-status {
+            font-size: 14px;
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .service-status.warning {
+            color: #ffaa00;
+        }
+
+        .service-status.error {
+            color: #ff4444;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            background: #00ffff;
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            opacity: 0; /* Initial state for reveal animation */
+            transform: translateY(20px); /* Initial state for reveal animation */
+            animation: fadeInBottom 0.6s ease-out forwards; /* Reveal animation */
+            animation-delay: 0.8s; /* Stagger animation */
+        }
+
+        .back-btn:hover {
+            background: #00e6e6;
+            transform: translateY(-2px);
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 16px;
+        }
+
+        /* MEDIA QUERIES - Consistent across both pages */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .status-title {
+                font-size: 2rem;
+            }
+            
+            .status-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .status-card {
+                padding: 20px;
+            }
+        }
+
+        /* SCROLL BEHAVIOR & SCROLLBAR - Consistent across both pages */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00e6e6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                Nyrex<span class="highlight">.lol</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li> <!-- Link back to index.html -->
+                <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
+                <li><a href="status.html">Status</a></li> <!-- Link to itself -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="status-page" id="status-section">
+            <div class="container">
+                <div class="status-content">
+                    <h2 class="status-title">
+                        System <span class="highlight">Status</span>
+                    </h2>
+                    
+                    <div class="status-cards">
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot" id="website-dot"></div>
+                                <div class="service-name">Main Website</div>
+                            </div>
+                            <div class="service-status" id="website-status">Checking...</div>
+                            <div class="service-description" id="website-description">
+                                Testing connection and measuring response time...
+                            </div>
+                        </div>
+
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <div class="service-name">Nyrex For Roblox</div>
+                            </div>
+                            <div class="service-status">Operational</div>
+                            <div class="service-description">
+                                All Roblox services are responding normally. No issues detected.
+                            </div>
+                        </div>
+                    </div>          
+
+                    <a href="index.html" class="back-btn">Back to Home</a> <!-- Link back to index.html -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let statusCheckInterval;
+
+        async function checkWebsiteStatus() {
+            const websiteDot = document.getElementById('website-dot');
+            const websiteStatus = document.getElementById('website-status');
+            const websiteDescription = document.getElementById('website-description');
+            
+            try {
+                const startTime = performance.now();
+                // Ping index.html or your main site URL to check status
+                const response = await fetch('index.html', { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                if (response.ok) {
+                    websiteDot.className = 'status-dot';
+                    websiteStatus.className = 'service-status';
+                    websiteStatus.textContent = 'Operational';
+                    websiteDescription.textContent = `All systems are running normally. Response time: ${responseTime}ms`;
+                } else {
+                    websiteDot.className = 'status-dot warning';
+                    websiteStatus.className = 'service-status warning';
+                    websiteStatus.textContent = 'Partial Issues';
+                    websiteDescription.textContent = `Server responding with issues. Response time: ${responseTime}ms`;
+                }
+            } catch (error) {
+                websiteDot.className = 'status-dot error';
+                websiteStatus.className = 'service-status error';
+                websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
+            }
+        }
+
+        function updateAllStatus() {
+            checkWebsiteStatus();
+        }
+
+        function startStatusMonitoring() {
+            updateAllStatus();
+            statusCheckInterval = setInterval(updateAllStatus, 30000);
+        }
+
+        function stopStatusMonitoring() {
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Start status monitoring when the status page loads
+            startStatusMonitoring();
+            // The page-wide fade-in animation is handled by CSS on .status-page itself
+            // Individual elements will also animate in due to their own animation properties
+        });
+
+        // Header scroll effect (kept for consistency if status page itself becomes scrollable)
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+                header.style.padding = '15px 0';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.padding = '20px 0';
+            }
+        });
+    </script>
+</body>
+</html>
