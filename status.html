@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nyrex Executor - Status</title>
-    <link rel="icon" type="image/png" href="favicon.ico.png?v=1.0">
+    <title>Synra - Status</title> <link rel="icon" type="image/png" href="favicon.ico.png?v=1.0">
     <style>
         /* Same CSS as before */
         * {
@@ -57,7 +56,7 @@
         }
 
         .logo .highlight {
-            color: #00ffff;
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
         .nav-links {
@@ -88,7 +87,7 @@
 
         .nav-links a:hover {
             opacity: 1;
-            color: #00ffff;
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
         .status-page {
@@ -117,7 +116,7 @@
         }
 
         .status-title .highlight {
-            color: #00ffff;
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
         .status-cards {
@@ -144,7 +143,7 @@
 
         .status-card:hover {
             transform: translateY(-5px);
-            border-color: #00ffff;
+            border-color: #89CFF0; /* Changed to Baby Blue */
         }
 
         .status-indicator {
@@ -230,7 +229,7 @@
         }
 
         .back-btn {
-            background: #00ffff;
+            background: #89CFF0; /* Changed to Baby Blue */
             color: #000000;
             padding: 12px 24px;
             border-radius: 8px;
@@ -249,7 +248,7 @@
         }
 
         .back-btn:hover {
-            background: #00e6e6;
+            background: #76B8E0; /* Slightly darker baby blue for hover */
             transform: translateY(-2px);
         }
 
@@ -304,8 +303,8 @@
             position: fixed;
             top: 80px;
             right: 20px;
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid #00ffff;
+            background: rgba(137, 207, 240, 0.1); /* Changed to Baby Blue rgba */
+            border: 1px solid #89CFF0; /* Changed to Baby Blue */
             border-radius: 8px;
             padding: 10px 15px;
             font-size: 12px;
@@ -352,12 +351,13 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #00ffff;
+            background: #89CFF0; /* Changed to Baby Blue */
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #00e6e6;
+            background: #76B8E0; /* Slightly darker baby blue for hover */
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -369,8 +369,7 @@
     <header>
         <nav class="container">
             <div class="logo">
-                Nyrex<span class="highlight">.lol</span>
-            </div>
+                Synra<span class="highlight">.lol</span> </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
@@ -402,8 +401,7 @@
                         <div class="status-card">
                             <div class="status-indicator">
                                 <div class="status-dot" id="roblox-dot"></div>
-                                <div class="service-name">Nyrex For Roblox</div>
-                            </div>
+                                <div class="service-name">Synra For Roblox</div> </div>
                             <div class="service-status" id="roblox-status">Loading...</div>
                             <div class="service-description" id="roblox-description">
                                 Loading current status...
@@ -412,13 +410,13 @@
                     </div>
 
                     <div class="admin-controls" id="adminControls">
-                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusLocal('up', 'Nyrex For Roblox is now operational!')">
+                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusLocal('up', 'Synra For Roblox is now operational!')">
                             Set Operational (Local)
                         </button>
-                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusLocal('warning', 'Nyrex For Roblox is experiencing some issues.')">
+                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusLocal('warning', 'Synra For Roblox is experiencing some issues.')">
                             Set Warning (Local)
                         </button>
-                        <button class="admin-btn btn-down" onclick="updateRobloxStatusLocal('down', 'Nyrex For Roblox is currently down for maintenance.')">
+                        <button class="admin-btn btn-down" onclick="updateRobloxStatusLocal('down', 'Synra For Roblox is currently down for maintenance.')">
                             Set Down (Local)
                         </button>
                         <button class="admin-btn btn-hide" onclick="hideAdminControls()">
@@ -433,7 +431,7 @@
     </main>
 
     <script>
-        let statusCheckInterval; // Keep this variable as it's used by setInterval
+        let statusCheckInterval; 
 
         async function checkWebsiteStatus() {
             const websiteDot = document.getElementById('website-dot');
@@ -477,12 +475,12 @@
                     updateRobloxStatusDisplay(status.roblox.status, status.roblox.message);
                 } else {
                     // Fallback if status.json is not found or has issues
-                    updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Please wait for an update!');
+                    updateRobloxStatusDisplay('down', 'Synra For Roblox is currently down. Please wait for an update!'); // Updated Name
                 }
             } catch (error) {
                 console.error('Error fetching status.json:', error);
                 // Fallback in case of network error or malformed JSON
-                updateRobloxStatusDisplay('down', 'Nyrex For Roblox is currently down. Could not load status information.');
+                updateRobloxStatusDisplay('down', 'Synra For Roblox is currently down. Could not load status information.'); // Updated Name
             }
         }
 
@@ -547,12 +545,12 @@
 
         // Auto-refresh status every 30 seconds
         function startStatusMonitoring() {
-            checkWebsiteStatus(); // Checks your index.html response time
-            loadRobloxStatus();   // Loads Roblox status from status.json (the global source)
+            checkWebsiteStatus(); 
+            loadRobloxStatus();   
             statusCheckInterval = setInterval(() => {
                 checkWebsiteStatus();
-                loadRobloxStatus(); // This will refresh the status from status.json
-            }, 30000); // Refreshes every 30 seconds
+                loadRobloxStatus(); 
+            }, 30000); 
         }
 
         // Admin keyboard shortcut
