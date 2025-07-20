@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synra Executor</title>
-    <link rel="icon" type="image/png" href="favicon.ico.png?v=1.0">
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <title>Synra - Status</title> <link rel="icon" type="image/png" href="favicon.ico.png?v=1.0">
     <style>
-        /* GLOBAL STYLES - Consistent across both pages */
+        /* Same CSS as before */
         * {
             margin: 0;
             padding: 0;
@@ -17,7 +15,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
-            background-attachment: fixed; /* Ensures gradient covers full viewport */
+            background-attachment: fixed;
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
@@ -51,16 +49,14 @@
             font-size: 24px;
             font-weight: 600;
             color: #ffffff;
-            
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeInTop 0.8s ease-out forwards;
             animation-delay: 0.2s;
         }
 
-        /* Changed highlight color to baby blue */
         .logo .highlight {
-            color: #89CFF0; /* Baby blue */
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
         .nav-links {
@@ -71,7 +67,6 @@
         }
 
         .nav-links li {
-            
             opacity: 0;
             transform: translateY(-20px);
             animation: fadeInTop 0.8s ease-out forwards;
@@ -80,7 +75,6 @@
         .nav-links li:nth-child(1) { animation-delay: 0.3s; }
         .nav-links li:nth-child(2) { animation-delay: 0.4s; }
         .nav-links li:nth-child(3) { animation-delay: 0.5s; }
-
 
         .nav-links a {
             color: #ffffff;
@@ -91,309 +85,99 @@
             opacity: 0.8;
         }
 
-        /* Changed hover color to baby blue */
         .nav-links a:hover {
             opacity: 1;
-            color: #89CFF0; /* Baby blue */
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
+        .status-page {
+            min-height: 100vh;
+            padding: 120px 0 80px;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            overflow: hidden;
+            opacity: 0;
+            animation: fadeInPage 0.8s ease-out forwards;
         }
 
-        /* Changed radial gradient color to baby blue */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(137, 207, 240, 0.1) 0%, transparent 70%); /* Baby blue with transparency */
-            animation: gradientPulse 10s infinite alternate;
-            opacity: 0.5;
-            z-index: 0;
-        }
-
-        .hero-content {
+        .status-content {
             max-width: 800px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-logo {
-            margin-bottom: 40px;
-        }
-
-        .brand-circles {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        /* Changed circle background to baby blue */
-        .circle {
-            width: 60px;
-            height: 60px;
-            background: #89CFF0; /* Baby blue */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #000000;
-        }
-
-        .main-title {
-            font-size: 4rem;
-            font-weight: 300;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBottom 0.8s ease-out forwards;
-            animation-delay: 0.6s;
-        }
-
-        /* Changed highlight color to baby blue */
-        .main-title .highlight {
-            color: #89CFF0; /* Baby blue */
-        }
-
-        .hero-description {
-            font-size: 18px;
-            color: #cccccc;
-            line-height: 1.8;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 300;
-            
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBottom 0.8s ease-out forwards;
-            animation-delay: 0.8s;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Changed download button background to baby blue */
-        .download-btn {
-            background: #89CFF0; /* Baby blue */
-            color: #000000;
-            padding: 15px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBottom 0.8s ease-out forwards;
-            animation-delay: 1s;
-        }
-
-        /* Changed download button hover background */
-        .download-btn:hover {
-            background: #76BEE6; /* Slightly darker baby blue */
-            transform: translateY(-2px);
-        }
-
-        .download-btn::before {
-            content: '→';
-            font-size: 18px;
-        }
-
-        .discord-btn {
-            background: transparent;
-            color: #ffffff;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-          
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInBottom 0.8s ease-out forwards;
-            animation-delay: 1.1s;
-        }
-
-        .discord-btn:hover {
-            background: #ffffff;
-            color: #0a0a0a;
-            transform: translateY(-2px);
-        }
-
-        .discord-btn::before {
-            content: '💬';
-            font-size: 18px;
-        }
-
-        .features-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             text-align: center;
         }
 
-        .section-title {
+        .status-title {
             font-size: 3rem;
             font-weight: 300;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             color: #ffffff;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            animation: fadeInBottom 0.6s ease-out forwards;
+            animation-delay: 0.2s;
         }
 
-        .section-title.reveal {
-            opacity: 1;
-            transform: translateY(0);
+        .status-title .highlight {
+            color: #89CFF0; /* Changed to Baby Blue */
         }
 
-        /* Changed feature highlight color to baby blue */
-        .feature-highlight {
-            color: #89CFF0; /* Baby blue */
-        }
-
-        .feature-cards {
+        .status-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
+            margin-top: 50px;
         }
 
-        @media (min-width: 992px) {
-            .feature-cards {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto auto;
-            }
-            .feature-card.large-card {
-                grid-column: span 2;
-            }
-        }
-
-        .feature-card {
+        .status-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 40px;
+            padding: 30px;
             text-align: left;
-            transition: all 0.6s ease-out;
+            transition: all 0.3s ease, border-color 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
+            animation: fadeInBottom 0.6s ease-out forwards;
         }
 
-        .feature-card.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .status-card:nth-child(1) { animation-delay: 0.4s; }
+        .status-card:nth-child(2) { animation-delay: 0.6s; }
 
-        /* Changed feature card hover border color to baby blue */
-        .feature-card:hover {
+        .status-card:hover {
             transform: translateY(-5px);
-            border-color: #89CFF0; /* Baby blue */
+            border-color: #89CFF0; /* Changed to Baby Blue */
         }
 
-        /* Changed feature icon color to baby blue */
-        .feature-icon {
-            margin-bottom: 20px;
-            color: #89CFF0; /* Baby blue */
-        }
-
-        .feature-icon svg {
-            width: 48px;
-            height: 48px;
-            stroke-width: 1.5;
-        }
-
-        .feature-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .feature-description {
-            font-size: 16px;
-            color: #cccccc;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        /* Changed feature discord link color to baby blue */
-        .feature-discord-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #89CFF0; /* Baby blue */
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-discord-link:hover {
-            color: #ffffff;
-            transform: translateX(5px);
-        }
-
-        /* NEW: Styles for the initial verification screen */
-        #initial-verification-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 100%);
+        .status-indicator {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 9999; /* Ensure it's on top of everything */
-            color: #ffffff;
-            font-size: 1.5em;
-            text-align: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
-        #initial-verification-screen p {
-            margin-bottom: 20px;
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
         }
 
-        /* NEW: Style to initially hide the main content */
-        #main-website-content {
-            display: none; /* This will be changed to 'block' by JavaScript after verification */
+        .status-dot.warning {
+            background: #ffaa00;
         }
 
-        /* COMMON ANIMATIONS - Consistent across both pages */
-        @keyframes gradientPulse {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
+        .status-dot.error {
+            background: #ff4444;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes fadeInTop {
@@ -418,56 +202,142 @@
             }
         }
 
-        /* MEDIA QUERIES - Consistent across both pages */
+        .service-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .service-status {
+            font-size: 14px;
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .service-status.warning {
+            color: #ffaa00;
+        }
+
+        .service-status.error {
+            color: #ff4444;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            background: #89CFF0; /* Changed to Baby Blue */
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInBottom 0.6s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+
+        .back-btn:hover {
+            background: #76B8E0; /* Slightly darker baby blue for hover */
+            transform: translateY(-2px);
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 16px;
+        }
+
+        .admin-controls {
+            margin-top: 30px;
+            display: none; /* Hidden by default */
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-operational {
+            background: #00ff00;
+            color: #000;
+        }
+
+        .btn-warning {
+            background: #ffaa00;
+            color: #000;
+        }
+
+        .btn-down {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .btn-hide {
+            background: #666;
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        .update-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(137, 207, 240, 0.1); /* Changed to Baby Blue rgba */
+            border: 1px solid #89CFF0; /* Changed to Baby Blue */
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 12px;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            z-index: 1001; /* Ensure it's above other content */
+        }
+
+        .update-indicator.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
-            .main-title {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
+            .status-title {
                 font-size: 2rem;
             }
-
-            .hero-description {
-                font-size: 16px;
-                padding: 0 20px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .download-btn, .discord-btn {
-                width: 200px;
-                justify-content: center;
-            }
-
-            .circle {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .feature-cards {
+            
+            .status-cards {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
 
-            .feature-card.large-card {
-                grid-column: span 1;
-            }
-
-            .feature-card {
+            .status-card {
                 padding: 20px;
             }
         }
 
-        /* SCROLL BEHAVIOR & SCROLLBAR - Consistent across both pages */
         html {
             scroll-behavior: smooth;
         }
@@ -480,132 +350,221 @@
             background: #1a1a1a;
         }
 
-        /* Changed scrollbar thumb color to baby blue */
         ::-webkit-scrollbar-thumb {
-            background: #89CFF0; /* Baby blue */
+            background: #89CFF0; /* Changed to Baby Blue */
             border-radius: 4px;
         }
 
-        /* Changed scrollbar thumb hover color */
         ::-webkit-scrollbar-thumb:hover {
-            background: #76BEE6; /* Slightly darker baby blue */
+            background: #76B8E0; /* Slightly darker baby blue for hover */
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div id="initial-verification-screen">
-        <p>Verifying you're human...</p>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAABlHvLlSN8_G0Yf9" data-callback="turnstileCallback" data-theme="dark"></div>
+    <div class="update-indicator" id="updateIndicator">
+        Status updated **locally** in your browser. This does **NOT** update the global status file.
     </div>
 
-    <div id="main-website-content">
-        <header>
-            <nav class="container">
-                <div class="logo">
-                    Synra<span class="highlight">.lol</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
-                    <li><a href="status.html">Status</a></li>
-                </ul>
-            </nav>
-        </header>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                Synra<span class="highlight">.lol</span> </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="https://discord.gg/DSNxC6VJ4U" target="_blank">Discord</a></li>
+                <li><a href="status.html">Status</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <main>
-            <section class="hero" id="home">
-                <div class="hero-content">
-                    <h1 class="main-title">
-                        Synra<span class="highlight">.lol</span>
-                    </h1>
+    <main>
+        <section class="status-page">
+            <div class="container">
+                <div class="status-content">
+                    <h2 class="status-title">
+                        System <span class="highlight">Status</span>
+                    </h2>
                     
-                    <p class="hero-description">
-                        Synra is the new executor built just for you.
-                        Blazing fast, rock-solid security, and a sleek experience — all in one package.
-                        We're not just keeping up — we're setting the standard.
-                        Our team is dedicated to keeping Synra running smoothly, so you can execute with confidence.
-                    </p>
-                    
-                    <div class="cta-buttons">
-                        <a href="https://www.dropbox.com/scl/fi/6sp6o59htrr5ami8bl800/synra.rar?rlkey=2ebc4xqzt9liaad5nd680ara9&st=6zf67xxe&dl=1" class="download-btn" target="_blank">Download</a>
-                        <a href="https://discord.gg/DSNxC6VJ4U" class="discord-btn" target="_blank">Discord</a>
-                    </div>
-                </div>
-            </section>
+                    <div class="status-cards">
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot" id="website-dot"></div>
+                                <div class="service-name">Main Website</div>
+                            </div>
+                            <div class="service-status" id="website-status">Checking...</div>
+                            <div class="service-description" id="website-description">
+                                Testing connection and measuring response time...
+                            </div>
+                        </div>
 
-            <section class="features-section">
-                <div class="container">
-                    <h2 class="section-title">Why Choose <span class="highlight">Synra?</span></h2>
-                    <div class="feature-cards">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <div class="status-card">
+                            <div class="status-indicator">
+                                <div class="status-dot" id="roblox-dot"></div>
+                                <div class="service-name">Synra For Roblox</div> </div>
+                            <div class="service-status" id="roblox-status">Loading...</div>
+                            <div class="service-description" id="roblox-description">
+                                Loading current status...
                             </div>
-                            <h3 class="feature-title">Best <span class="feature-highlight">Security</span></h3>
-                            <p class="feature-description">
-                                We are always trying to improve our Security. Even if it's Content Updates & API Updates, we are always improving.
-                            </p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
-                            </div>
-                            <h3 class="feature-title">Amazing <span class="feature-highlight">Support</span></h3>
-                            <p class="feature-description">
-                                We do our best to respond to every ticket shortly after they are opened. Our support team is quick and capable to answer/fix all of your concerns.
-                            </p>
-                        </div>
-                        <div class="feature-card large-card">
-                            <div class="feature-icon">
-                                <svg viewBox="0 0 245 240" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="32" height="32"><path d="M104.4 103.9c-5.7 0-10.2 4.6-10.2 10.2s4.6 10.2 10.2 10.2c5.7 0 10.2-4.6 10.2-10.2s-4.5-10.2-10.2-10.2zm64.9-31.5c-15.7-5.5-35.7-1.1-47.5 7.8-11.9-8.9-31.9-13.4-47.5-7.8-19.4-6.7-39.7-0.7-48.6 18.1-17.6 37.5-30.7 75.9-36.9 113.8 6.6 5.4 12.1 10 17.1 14.2 11.6 9.8 20.3 17.2 29.5 24.3 11.4 8.7 20.5 15.6 28.6 21.9 3.5 2.8 7.1 5.3 10.6 7.5l.3.2c5.9 3.8 11.2 6.5 16.2 8.5 7.6 3 14.8 5.4 20.7 7.2 7.7 2.3 12.3 3.4 15.4 3.4 3 0 7.6-1.1 15.4-3.4 5.9-1.8 13.1-4.2 20.7-7.2 5-2 10.3-4.7 16.2-8.5l.3-.2c3.5-2.2 7.1-4.7 10.6-7.5 8.1-6.3 17.2-13.2 28.6-21.9 9.2-7.1 17.9-14.5 29.5-24.3 5-4.2 10.5-8.8 17.1-14.2-6.3-37.9-19.3-76.3-36.9-113.8-8.9-18.8-29.2-24.8-48.6-18.1zM73.4 179.6c-9.9 0-17.9-8-17.9-17.9s8-17.9 17.9-17.9 17.9 8 17.9 17.9-8 17.9-17.9 17.9zm98.2 0c-9.9 0-17.9-8-17.9-17.9s8-17.9 17.9-17.9 17.9 8 17.9 17.9-8 17.9-17.9 17.9z"/></svg>
-                            </div>
-                            <h3 class="feature-title">Public <span class="feature-highlight">Discord</span></h3>
-                            <p class="feature-description">
-                                We host giveaways, events, and more in our public discord. Join now to also keep up with news & updates by the Synra Team!
-                            </p>
-                            <a href="https://discord.gg/DSNxC6VJ4U" target="_blank" class="feature-discord-link">
-                                Join our Discord →
-                            </a>
                         </div>
                     </div>
+
+                    <div class="admin-controls" id="adminControls">
+                        <button class="admin-btn btn-operational" onclick="updateRobloxStatusLocal('up', 'Synra For Roblox is now operational!')">
+                            Set Operational (Local)
+                        </button>
+                        <button class="admin-btn btn-warning" onclick="updateRobloxStatusLocal('warning', 'Synra For Roblox is experiencing some issues.')">
+                            Set Warning (Local)
+                        </button>
+                        <button class="admin-btn btn-down" onclick="updateRobloxStatusLocal('down', 'Synra For Roblox is currently down for maintenance.')">
+                            Set Down (Local)
+                        </button>
+                        <button class="admin-btn btn-hide" onclick="hideAdminControls()">
+                            Hide Controls
+                        </button>
+                    </div>
+
+                    <a href="index.html" class="back-btn">Back to Home</a>
                 </div>
-            </section>
-        </main>
-    </div>
+            </div>
+        </section>
+    </main>
 
     <script>
-        // Callback function for Cloudflare Turnstile
-        function turnstileCallback(token) {
-            // Hide the verification screen
-            document.getElementById('initial-verification-screen').style.display = 'none';
-            // Show the main website content
-            document.getElementById('main-website-content').style.display = 'block'; // Or 'flex', 'grid', etc. depending on your main content's intended display property
+        let statusCheckInterval; 
 
-            // IMPORTANT: For true security, you should also send this 'token'
-            // to your server and verify it using your Cloudflare Secret Key.
-            // If verification fails on the server, you should redirect the user
-            // or prevent access to sensitive parts of your application.
-            console.log("Turnstile verification successful. Token:", token);
+        async function checkWebsiteStatus() {
+            const websiteDot = document.getElementById('website-dot');
+            const websiteStatus = document.getElementById('website-status');
+            const websiteDescription = document.getElementById('website-description');
+            
+            try {
+                const startTime = performance.now();
+                const response = await fetch('index.html', { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                if (response.ok) {
+                    websiteDot.className = 'status-dot';
+                    websiteStatus.className = 'service-status';
+                    websiteStatus.textContent = 'Operational';
+                    websiteDescription.textContent = `All systems are running normally. Response time: ${responseTime}ms`;
+                } else {
+                    websiteDot.className = 'status-dot warning';
+                    websiteStatus.className = 'service-status warning';
+                    websiteStatus.textContent = 'Partial Issues';
+                    websiteDescription.textContent = `Server responding with issues. Response time: ${responseTime}ms`;
+                }
+            } catch (error) {
+                websiteDot.className = 'status-dot error';
+                websiteStatus.className = 'service-status error';
+                websiteStatus.textContent = 'Service Down';
+                websiteDescription.textContent = 'Website is currently unreachable. Connection failed.';
+            }
         }
 
-        // Intersection Observer for scroll animations (for features section)
-        // This will now apply *after* the main content is revealed
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                    if (entry.target.classList.contains('feature-card')) {
-                       const index = Array.from(document.querySelectorAll('.feature-card')).indexOf(entry.target);
-                       entry.target.style.transitionDelay = `${0.1 * index}s`;
-                    }
-                    observer.unobserve(entry.target);
+        // This function loads the actual status from your status.json file.
+        async function loadRobloxStatus() {
+            try {
+                const response = await fetch('status.json', { cache: 'no-cache' });
+                if (response.ok) {
+                    const status = await response.json();
+                    updateRobloxStatusDisplay(status.roblox.status, status.roblox.message);
+                } else {
+                    // Fallback if status.json is not found or has issues
+                    updateRobloxStatusDisplay('down', 'Synra For Roblox is currently down. Please wait for an update!'); // Updated Name
                 }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px'
+            } catch (error) {
+                console.error('Error fetching status.json:', error);
+                // Fallback in case of network error or malformed JSON
+                updateRobloxStatusDisplay('down', 'Synra For Roblox is currently down. Could not load status information.'); // Updated Name
+            }
+        }
+
+        // This function updates the display on the page.
+        function updateRobloxStatusDisplay(status, message) {
+            const robloxDot = document.getElementById('roblox-dot');
+            const robloxStatus = document.getElementById('roblox-status');
+            const robloxDescription = document.getElementById('roblox-description');
+            
+            switch(status) {
+                case 'up':
+                    robloxDot.className = 'status-dot';
+                    robloxStatus.className = 'service-status';
+                    robloxStatus.textContent = 'Operational';
+                    break;
+                case 'warning':
+                    robloxDot.className = 'status-dot warning';
+                    robloxStatus.className = 'service-status warning';
+                    robloxStatus.textContent = 'Partial Issues';
+                    break;
+                case 'down':
+                default:
+                    robloxDot.className = 'status-dot error';
+                    robloxStatus.className = 'service-status error';
+                    robloxStatus.textContent = 'Service Down';
+                    break;
+            }
+            
+            robloxDescription.textContent = message;
+        }
+
+        // This function now *only* updates the status in the current browser session.
+        // It does NOT interact with any server-side script or status.json.
+        function updateRobloxStatusLocal(status, message) {
+            updateRobloxStatusDisplay(status, message);
+            showUpdateIndicator();
+            // Important: This change is ONLY visible to the person who clicked the button.
+            // To make it global, you need to manually edit status.json on GitHub.
+        }
+
+        function showUpdateIndicator() {
+            const indicator = document.getElementById('updateIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 3000);
+        }
+
+        // Admin access functions
+        function showAdminControls() {
+            const password = prompt("Enter admin password:");
+            if (password === "nyrex2024") { // Your password
+                document.getElementById('adminControls').style.display = 'flex';
+            } else if (password !== null) {
+                alert("Incorrect password!");
+            }
+        }
+
+        function hideAdminControls() {
+            document.getElementById('adminControls').style.display = 'none';
+        }
+
+        // Auto-refresh status every 30 seconds
+        function startStatusMonitoring() {
+            checkWebsiteStatus(); 
+            loadRobloxStatus();   
+            statusCheckInterval = setInterval(() => {
+                checkWebsiteStatus();
+                loadRobloxStatus(); 
+            }, 30000); 
+        }
+
+        // Admin keyboard shortcut
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+                showAdminControls();
+            }
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            startStatusMonitoring();
+        });
+
+        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
@@ -615,23 +574,6 @@
                 header.style.background = 'rgba(10, 10, 10, 0.95)';
                 header.style.padding = '20px 0';
             }
-
-            const hero = document.querySelector('.hero');
-            // Parallax effect for the hero section
-            // Only apply if hero exists and main content is visible
-            if (hero && document.getElementById('main-website-content').style.display !== 'none') {
-                 const scrolled = window.pageYOffset;
-                 hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Observe elements for the features section on page load
-            // Only do this if the main content is visible (which it won't be initially)
-            // The observer will pick these up once 'main-website-content' is displayed
-            document.querySelectorAll('.section-title, .feature-card').forEach(element => {
-                observer.observe(element);
-            });
         });
     </script>
 </body>
