@@ -4,42 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyrex</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet">
     <style>
         body {
-            background: radial-gradient(circle at top, #050505, #000000);
-            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #0a0a0a;
+            font-family: 'Orbitron', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Orbitron', sans-serif;
+            flex-direction: column;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Background gradient animation */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0,255,255,0.05), transparent 60%),
+                        radial-gradient(circle at 30% 70%, rgba(255,0,255,0.05), transparent 60%);
+            animation: rotateBg 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotateBg {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         h1 {
             font-size: 5rem;
-            background: linear-gradient(270deg, #00f0ff, #ff00f7, #00f0ff);
-            background-size: 600% 600%;
+            background: linear-gradient(90deg, #00f0ff, #ff00f7, #00f0ff);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientShift 8s ease infinite, glowPulse 2s ease-in-out infinite alternate;
-            text-shadow:
-                0 0 5px rgba(0, 255, 255, 0.5),
-                0 0 15px rgba(255, 0, 255, 0.5);
+            animation: textGradient 6s ease infinite, glowPulse 2s ease-in-out infinite alternate;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         p {
-            font-size: 1.5rem;
-            color: #ccc;
-            margin-top: 15px;
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Roboto', sans-serif;
             letter-spacing: 2px;
             animation: fadeIn 3s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes gradientShift {
+        @keyframes textGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -47,27 +69,52 @@
 
         @keyframes glowPulse {
             from {
-                text-shadow:
-                    0 0 5px #0ff,
-                    0 0 15px #0ff,
-                    0 0 30px #0ff;
+                text-shadow: 0 0 8px #0ff, 0 0 16px #0ff, 0 0 24px #0ff;
             }
             to {
-                text-shadow:
-                    0 0 10px #ff00ff,
-                    0 0 25px #ff00ff,
-                    0 0 50px #ff00ff;
+                text-shadow: 0 0 8px #ff00ff, 0 0 16px #ff00ff, 0 0 32px #ff00ff;
             }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0.5; }
+            from { opacity: 0.6; }
             to { opacity: 1; }
+        }
+
+        /* Floating particle dots */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #0ff;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
     </style>
 </head>
 <body>
     <h1>COMING SOON</h1>
     <p>Come back soon</p>
+
+    <!-- Create particles -->
+    <script>
+        const particleCount = 25;
+        for(let i=0; i<particleCount; i++){
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (8 + Math.random() * 5) + 's';
+            particle.style.background = Math.random() > 0.5 ? '#0ff' : '#ff00ff';
+            document.body.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
